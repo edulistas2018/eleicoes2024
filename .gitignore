@@ -1,0 +1,9 @@
+# Ignorar pastas de dados CSV gigantes localmente
+detalhe_votacao_munzona_2024/
+detalhe_votacao_secao_2024/
+votacao_candidato_munzona_2024/
+votacao_partido_munzona_2024/
+
+# Ignorar arquivos de sistema do Windows
+Thumbs.db
+Desktop.ini

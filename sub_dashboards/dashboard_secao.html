@@ -1,0 +1,1654 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TSE Eleições 2024 - Detalhes por Seção Eleitoral</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        outfit: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        glass: {
+                            50: 'rgba(255, 255, 255, 0.02)',
+                            100: 'rgba(255, 255, 255, 0.05)',
+                            200: 'rgba(255, 255, 255, 0.08)',
+                            300: 'rgba(255, 255, 255, 0.12)',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- CSS Customizado (Aesthetics Premium & Glassmorphism) -->
+    <style>
+        :root {
+            --primary-glow: radial-gradient(rgba(139, 92, 246, 0.12), rgba(217, 70, 239, 0.03));
+            --glow-color-violet: rgba(139, 92, 246, 0.4);
+            --glow-color-magenta: rgba(217, 70, 239, 0.4);
+        }
+
+        body {
+            background-color: #030712;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(27, 4, 45, 0.8) 0%, rgba(3, 7, 18, 0.95) 90%),
+                radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 20% 80%, rgba(217, 70, 239, 0.05) 0%, transparent 50%);
+            background-attachment: fixed;
+            color: #f3f4f6;
+            overflow-x: hidden;
+        }
+
+        /* Efeito de Vidro Refinado */
+        .glass-card {
+            background: rgba(17, 24, 39, 0.55);
+            backdrop-filter: blur(16px) saturate(120%);
+            -webkit-backdrop-filter: blur(16px) saturate(120%);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .glass-card:hover {
+            border-color: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 16px 48px 0 rgba(0, 0, 0, 0.5), 0 0 15px rgba(139, 92, 246, 0.05);
+            transform: translateY(-2px);
+        }
+
+        /* Estilo da barra de rolagem */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(3, 7, 18, 0.8);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Efeito de neon pulsante violeta */
+        @keyframes pulse-neon {
+            0%, 100% {
+                border-color: rgba(139, 92, 246, 0.2);
+                box-shadow: 0 0 5px rgba(139, 92, 246, 0.1);
+            }
+            50% {
+                border-color: rgba(139, 92, 246, 0.5);
+                box-shadow: 0 0 15px rgba(139, 92, 246, 0.2);
+            }
+        }
+        .neon-border-pulse {
+            animation: pulse-neon 3s infinite;
+        }
+
+        /* Custom Input */
+        .glass-input {
+            background: rgba(3, 7, 18, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            color: #f3f4f6;
+            transition: all 0.3s ease;
+        }
+        .glass-input:focus {
+            outline: none;
+            border-color: #8b5cf6;
+            box-shadow: 0 0 10px rgba(139, 92, 246, 0.2);
+            background: rgba(3, 7, 18, 0.6);
+        }
+
+        select.glass-input option {
+            background-color: #0d1117;
+            color: #f3f4f6;
+        }
+
+        /* Chat bubbles */
+        .chat-user {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(124, 58, 237, 0.15) 100%);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 18px 18px 2px 18px;
+        }
+        .chat-assistant {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 18px 18px 18px 2px;
+        }
+
+        /* Chips */
+        .chip {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.2s ease;
+        }
+        .chip:hover {
+            background: rgba(139, 92, 246, 0.1);
+            border-color: rgba(139, 92, 246, 0.3);
+            transform: translateY(-1px);
+        }
+    </style>
+    
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- PapaParse -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="h-full flex flex-col font-sans antialiased text-gray-200">
+
+    <!-- Header -->
+    <header class="border-b border-white/5 bg-gray-950/40 backdrop-blur-md sticky top-0 z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="p-2.5 bg-gradient-to-tr from-violet-500 to-fuchsia-500 rounded-xl shadow-lg shadow-violet-500/10 flex items-center justify-center">
+                    <i data-lucide="map" class="w-6 h-6 text-white"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold font-outfit tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-violet-400 via-purple-300 to-fuchsia-400">
+                        TSE ELEIÇÕES 2024
+                    </h1>
+                    <p class="text-[10px] uppercase tracking-widest text-violet-400 font-semibold">Análise de Seções & Urnas</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <div id="fileStatusBadge" class="hidden md:flex items-center space-x-2 bg-violet-500/10 border border-violet-500/20 px-3.5 py-1.5 rounded-full text-xs text-violet-400 font-medium transition-all duration-300">
+                    <span class="w-2 h-2 rounded-full bg-violet-400"></span>
+                    <span class="text-gray-400 mr-0.5">Ativo:</span>
+                    <span id="loadedFileName">Nenhum arquivo</span>
+                </div>
+                <input type="file" id="csvFileInput" class="hidden" accept=".csv">
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+        
+        <!-- INITIAL STATE: Dropzone / State Selector -->
+        <section id="uploadZoneContainer" class="transition-all duration-500">
+            <!-- 1. AUTO SELECTOR CARD -->
+            <div id="autoSelectorCard" class="glass-card neon-border-pulse rounded-3xl p-8 sm:p-12 text-center flex flex-col items-center justify-center space-y-8 relative overflow-hidden group">
+                <div class="absolute -top-40 -left-40 w-80 h-80 bg-violet-500/5 rounded-full blur-3xl group-hover:bg-violet-500/10 transition-all duration-500"></div>
+                <div class="absolute -bottom-40 -right-40 w-80 h-80 bg-fuchsia-500/5 rounded-full blur-3xl group-hover:bg-fuchsia-500/10 transition-all duration-500"></div>
+                
+                <div class="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center shadow-inner group-hover:scale-105 group-hover:border-violet-500/30 transition-all duration-300">
+                    <i data-lucide="database" class="w-8 h-8 text-violet-400"></i>
+                </div>
+                
+                <div class="max-w-md space-y-2">
+                    <h3 class="text-2xl font-bold font-outfit text-white">Carregamento Inteligente de Seções</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed">
+                        Escolha um Estado (UF) para carregar os dados de seções e urnas diretamente do diretório local.
+                    </p>
+                </div>
+
+                <!-- SELECT & LOAD BUTTON -->
+                <div class="w-full max-w-sm flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                    <select id="stateSelector" class="flex-1 glass-input px-4 py-3 text-sm focus:border-violet-500 focus:ring-1 focus:ring-violet-500 bg-gray-950 border-white/10 text-white rounded-xl">
+                        <option value="BRASIL">Brasil (Consolidado)</option>
+                        <option value="AC">Acre (AC)</option>
+                        <option value="AL">Alagoas (AL)</option>
+                        <option value="AM">Amazonas (AM)</option>
+                        <option value="AP">Amapá (AP)</option>
+                        <option value="BA">Bahia (BA)</option>
+                        <option value="CE">Ceará (CE)</option>
+                        <option value="ES">Espírito Santo (ES)</option>
+                        <option value="GO">Goiás (GO)</option>
+                        <option value="MA">Maranhão (MA)</option>
+                        <option value="MG">Minas Gerais (MG)</option>
+                        <option value="MS">Mato Grosso do Sul (MS)</option>
+                        <option value="MT">Mato Grosso (MT)</option>
+                        <option value="PA">Pará (PA)</option>
+                        <option value="PB">Paraíba (PB)</option>
+                        <option value="PE">Pernambuco (PE)</option>
+                        <option value="PI">Piauí (PI)</option>
+                        <option value="PR">Paraná (PR)</option>
+                        <option value="RJ">Rio de Janeiro (RJ)</option>
+                        <option value="RN">Rio Grande do Norte (RN)</option>
+                        <option value="RO">Rondônia (RO)</option>
+                        <option value="RR">Roraima (RR)</option>
+                        <option value="RS">Rio Grande do Sul (RS)</option>
+                        <option value="SC">Santa Catarina (SC)</option>
+                        <option value="SE">Sergipe (SE)</option>
+                        <option value="SP" selected>São Paulo (SP)</option>
+                        <option value="TO">Tocantins (TO)</option>
+                    </select>
+                    <button onclick="loadStateDataAuto()" class="bg-gradient-to-r from-violet-600 to-fuchsia-500 hover:from-violet-500 hover:to-fuchsia-400 text-white font-semibold text-sm px-6 py-3 rounded-xl shadow-lg active:scale-95 transition-all duration-200 flex items-center justify-center gap-2">
+                        <i data-lucide="play" class="w-4 h-4"></i>
+                        <span>Carregar</span>
+                    </button>
+                </div>
+
+                <!-- OR MANUAL UPLOAD TRIGGERS -->
+                <div class="text-xs text-gray-500 pt-2 border-t border-white/5 w-full max-w-lg flex flex-col items-center gap-2">
+                    <span class="flex items-center space-x-1.5"><i data-lucide="shield-check" class="w-4 h-4 text-violet-500"></i> <span>Acesso ultra rápido e offline</span></span>
+                    <button onclick="showManualUpload()" class="text-violet-400 hover:text-violet-300 font-semibold underline mt-2">Ou carregar um arquivo .csv manualmente</button>
+                </div>
+            </div>
+
+            <!-- 2. CORS ERROR / FALLBACK SCREEN (Initially Hidden) -->
+            <div id="corsErrorCard" class="hidden glass-card rounded-3xl p-8 sm:p-12 text-center flex flex-col items-center justify-center space-y-6 relative overflow-hidden group">
+                <div class="absolute -top-40 -left-40 w-80 h-80 bg-red-500/5 rounded-full blur-3xl"></div>
+                <div class="absolute -bottom-40 -right-40 w-80 h-80 bg-violet-500/5 rounded-full blur-3xl"></div>
+                
+                <div class="w-16 h-16 rounded-2xl bg-violet-500/10 border border-violet-500/30 flex items-center justify-center text-violet-400">
+                    <i data-lucide="alert-triangle" class="w-8 h-8"></i>
+                </div>
+                
+                <div class="max-w-xl space-y-3">
+                    <h3 class="text-2xl font-bold font-outfit text-white">Carregamento Manual Requerido</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed">
+                        O navegador bloqueou o carregamento automático por segurança do protocolo <code class="bg-white/5 px-1 rounded text-red-400">file://</code> (CORS).
+                    </p>
+                    <div class="bg-violet-500/10 border border-violet-500/25 rounded-2xl p-4 text-left max-w-md mx-auto space-y-2">
+                        <p class="text-xs text-violet-300 font-semibold">Como carregar:</p>
+                        <ol class="text-xs text-gray-300 list-decimal list-inside space-y-1.5">
+                            <li>Abra o diretório <code class="bg-white/5 px-1 rounded font-mono">detalhe_votacao_secao_2024</code>.</li>
+                            <li>Arraste o arquivo <strong id="fallbackFileName" class="text-white font-mono">detalhe_votacao_secao_2024_[UF].csv</strong> e solte-o no painel tracejado abaixo.</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- Dropzone fallback -->
+                <div id="dropzone" class="w-full max-w-lg border-2 border-dashed border-white/10 hover:border-violet-500/30 bg-white/[0.01] hover:bg-white/[0.03] rounded-2xl p-8 flex flex-col items-center justify-center space-y-3 transition-all cursor-pointer">
+                    <i data-lucide="upload-cloud" class="w-8 h-8 text-gray-500"></i>
+                    <p class="text-xs text-gray-400">Arraste e solte o arquivo CSV aqui ou clique para selecionar</p>
+                </div>
+                
+                <button onclick="hideManualUpload()" class="text-xs text-gray-500 hover:text-gray-300 underline font-medium">Voltar para seleção automática</button>
+            </div>
+            
+            <!-- Loading Modal Overlay -->
+            <div id="loadingOverlay" class="hidden fixed inset-0 bg-gray-950/80 backdrop-blur-md z-[100] flex items-center justify-center transition-all duration-300">
+                <div class="bg-gray-900/90 border border-white/10 p-8 rounded-2xl max-w-sm w-full text-center space-y-6 shadow-2xl">
+                    <div class="relative w-16 h-16 mx-auto">
+                        <div class="absolute inset-0 rounded-full border-4 border-violet-500/20"></div>
+                        <div class="absolute inset-0 rounded-full border-4 border-violet-500 border-t-transparent animate-spin"></div>
+                    </div>
+                    <div class="space-y-2">
+                        <h4 id="loadingOverlayTitle" class="text-lg font-bold font-outfit text-white">Analisando Seções...</h4>
+                        <p id="loadingOverlaySub" class="text-xs text-gray-400">Processando e computando taxas eleitorais offline.</p>
+                    </div>
+                    <div class="w-full bg-white/5 rounded-full h-2 overflow-hidden border border-white/5">
+                        <div id="loadingProgressBar" class="bg-gradient-to-r from-violet-500 to-fuchsia-400 h-full w-0 transition-all duration-300"></div>
+                    </div>
+                    <div class="text-[10px] text-gray-500 flex justify-between px-1">
+                        <span id="loadingProgressPercent">0%</span>
+                        <span id="loadingProgressRecords">0 registros</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ACTIVE STATE: Dashboard Content -->
+        <section id="dashboardContent" class="hidden space-y-8 transition-all duration-500 opacity-0">
+            
+            <!-- Filter Bar -->
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white/[0.02] border border-white/5 p-5 rounded-2xl">
+                <div class="space-y-1">
+                    <h2 class="text-lg font-bold font-outfit text-white flex items-center gap-2">
+                        <i data-lucide="layout-dashboard" class="w-5 h-5 text-violet-400"></i>
+                        Estatísticas Geográficas e Tecnológicas <span id="stateBadge" class="bg-violet-500/25 border border-violet-500/40 text-violet-300 px-2.5 py-0.5 rounded text-xs">UF</span>
+                    </h2>
+                    <p class="text-xs text-gray-400">Análise granular de locais físicos, seções específicas e modelos de urna.</p>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                    <!-- Municipality Filter -->
+                    <div class="flex items-center space-x-2.5">
+                        <label for="municipalityFilter" class="text-xs font-semibold text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
+                            <i data-lucide="map-pin" class="w-4 h-4 text-violet-400"></i>
+                            Município:
+                        </label>
+                        <select id="municipalityFilter" class="glass-input px-3 py-2 text-xs font-medium pr-8 min-w-[180px]">
+                            <option value="ALL">Todos os Municípios</option>
+                        </select>
+                    </div>
+                    <!-- Local de Votação Filter -->
+                    <div class="flex items-center space-x-2.5">
+                        <label for="localFilter" class="text-xs font-semibold text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
+                            <i data-lucide="building-2" class="w-4 h-4 text-violet-400"></i>
+                            Local:
+                        </label>
+                        <select id="localFilter" class="glass-input px-3 py-2 text-xs font-medium pr-8 max-w-[240px] truncate">
+                            <option value="ALL">Todos os Locais</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KPI Cards -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- Seções Totais -->
+                <div class="glass-card rounded-2xl p-5 flex items-center space-x-4">
+                    <div class="p-3.5 bg-violet-500/10 rounded-xl border border-violet-500/20 text-violet-400">
+                        <i data-lucide="server" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <p class="text-[11px] font-semibold text-gray-400 uppercase tracking-widest">Seções (Urnas)</p>
+                        <h4 id="kpiTotalSecoes" class="text-2xl font-black font-outfit tracking-tight text-white mt-1">0</h4>
+                        <p class="text-[10px] text-gray-500 mt-0.5">Seções instaladas</p>
+                    </div>
+                </div>
+                <!-- Locais de Votação -->
+                <div class="glass-card rounded-2xl p-5 flex items-center space-x-4">
+                    <div class="p-3.5 bg-purple-500/10 rounded-xl border border-purple-500/20 text-purple-400">
+                        <i data-lucide="school" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <p class="text-[11px] font-semibold text-gray-400 uppercase tracking-widest">Prédios Públicos</p>
+                        <h4 id="kpiTotalLocais" class="text-2xl font-black font-outfit tracking-tight text-white mt-1">0</h4>
+                        <p class="text-[10px] text-gray-500 mt-0.5">Pontos de votação</p>
+                    </div>
+                </div>
+                <!-- Eleitores Aptos (Sem contagem dupla!) -->
+                <div class="glass-card rounded-2xl p-5 flex items-center space-x-4">
+                    <div class="p-3.5 bg-fuchsia-500/10 rounded-xl border border-fuchsia-500/20 text-fuchsia-400">
+                        <i data-lucide="users" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <p class="text-[11px] font-semibold text-gray-400 uppercase tracking-widest">Eleitores Aptos</p>
+                        <h4 id="kpiTotalAptos" class="text-2xl font-black font-outfit tracking-tight text-white mt-1">0</h4>
+                        <p id="kpiAptosSub" class="text-[10px] text-fuchsia-400 font-bold mt-0.5">Consolidado único</p>
+                    </div>
+                </div>
+                <!-- Abstenção Média -->
+                <div class="glass-card rounded-2xl p-5 flex items-center space-x-4">
+                    <div class="p-3.5 bg-red-500/10 rounded-xl border border-red-500/20 text-red-400">
+                        <i data-lucide="percent" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <p class="text-[11px] font-semibold text-gray-400 uppercase tracking-widest">Abstenção</p>
+                        <h4 id="kpiTotalAbstencao" class="text-2xl font-black font-outfit tracking-tight text-white mt-1">0</h4>
+                        <p id="kpiAbstencaoPct" class="text-[10px] text-red-400 font-bold mt-0.5">0% de faltosos</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visualization Charts Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Doughnut 1: Modelos de Urna Usados -->
+                <div class="glass-card rounded-2xl p-6 flex flex-col justify-between min-h-[380px]">
+                    <div class="flex items-center justify-between pb-4 border-b border-white/5">
+                        <h4 class="text-sm font-bold font-outfit text-white flex items-center gap-2">
+                            <i data-lucide="cpu" class="w-4 h-4 text-violet-400"></i>
+                            Modelos de Urna Eletrônica
+                        </h4>
+                    </div>
+                    <div class="flex-1 flex items-center justify-center p-4 relative">
+                        <canvas id="urnasChart" class="max-h-[220px] max-w-[220px]"></canvas>
+                    </div>
+                </div>
+
+                <!-- Doughnut 2: Presença vs Abstenção -->
+                <div class="glass-card rounded-2xl p-6 flex flex-col justify-between min-h-[380px]">
+                    <div class="flex items-center justify-between pb-4 border-b border-white/5">
+                        <h4 class="text-sm font-bold font-outfit text-white flex items-center gap-2">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-fuchsia-400"></i>
+                            Presença Eleitoral
+                        </h4>
+                    </div>
+                    <div class="flex-1 flex items-center justify-center p-4 relative">
+                        <canvas id="attendanceChart" class="max-h-[220px] max-w-[220px]"></canvas>
+                    </div>
+                </div>
+
+                <!-- Bar Chart: Highest Abstention Schools -->
+                <div class="glass-card rounded-2xl p-6 flex flex-col justify-between min-h-[380px]">
+                    <div class="flex items-center justify-between pb-4 border-b border-white/5">
+                        <h4 class="text-sm font-bold font-outfit text-white flex items-center gap-2">
+                            <i data-lucide="bar-chart-2" class="w-4 h-4 text-red-400"></i>
+                            Locais com Maior Abstenção
+                        </h4>
+                    </div>
+                    <div class="flex-1 p-2 flex items-center justify-center">
+                        <canvas id="abstentionLocalChart" class="max-h-[240px] w-full"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NLP Chat Assistant & Highlights Panel -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- NLP Interactive Chat -->
+                <div class="glass-card rounded-2xl p-6 lg:col-span-2 flex flex-col h-[520px]">
+                    <div class="flex items-center justify-between pb-4 border-b border-white/5">
+                        <div class="flex items-center space-x-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-violet-500/10 border border-violet-500/20 text-violet-400 flex items-center justify-center">
+                                <i data-lucide="sparkles" class="w-4.5 h-4.5 animate-pulse"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-bold font-outfit text-white">Assistente de Geografia Eleitoral</h4>
+                                <p class="text-[10px] text-violet-400">Motor de Linguagem Natural Offline</p>
+                            </div>
+                        </div>
+                        <button onclick="clearChat()" class="text-xs text-gray-500 hover:text-gray-300 flex items-center gap-1 transition-colors">
+                            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> Limpar Histórico
+                        </button>
+                    </div>
+                    
+                    <div id="chatMessageArea" class="flex-1 overflow-y-auto py-4 space-y-4 pr-1 text-sm font-sans">
+                        <div class="chat-assistant p-4 text-gray-300 max-w-[85%] space-y-3">
+                            <p>👋 Olá! Sou seu **Assistente de Seções Eleitorais e Urnas**.</p>
+                            <p>Carregue os arquivos detalhados por seção para começar. Posso responder qualquer dúvida sobre locais de votação com maior abstenção, modelos de urna usados nas escolas e o comportamento geográfico das urnas.</p>
+                            <p>Use os atalhos rápidos ou digite sua pergunta!</p>
+                        </div>
+                    </div>
+
+                    <div class="py-2.5 border-t border-white/5 flex flex-wrap gap-1.5 overflow-x-auto max-h-[85px] content-start">
+                        <button onclick="askPreset('Qual local de votação teve a maior abstenção?')" class="chip px-3 py-1.5 rounded-full text-xs text-violet-300 font-medium">🚨 Escola Maior Abstenção</button>
+                        <button onclick="askPreset('Qual seção teve mais eleitores presentes?')" class="chip px-3 py-1.5 rounded-full text-xs text-violet-300 font-medium">📈 Seção Mais Frequentada</button>
+                        <button onclick="askPreset('Quantas seções usam a urna 2020?')" class="chip px-3 py-1.5 rounded-full text-xs text-violet-300 font-medium">⚙️ Total Urnas 2020</button>
+                        <button onclick="askPreset('Resumo por modelo de urna')" class="chip px-3 py-1.5 rounded-full text-xs text-violet-300 font-medium">📋 Resumo de Modelos</button>
+                        <button onclick="askPreset('Qual seção teve menor abstenção?')" class="chip px-3 py-1.5 rounded-full text-xs text-violet-300 font-medium">🏆 Maior Comparecimento Seção</button>
+                    </div>
+
+                    <div class="flex items-center space-x-2 pt-3 border-t border-white/5">
+                        <input type="text" id="chatInput" placeholder="Ex: Qual foi a abstenção na Escola Municipal Raio de Sol?" class="glass-input flex-1 px-4 py-3 text-sm focus:outline-none" onkeypress="handleChatKeyPress(event)">
+                        <button onclick="submitChat()" class="p-3 bg-gradient-to-r from-violet-600 to-fuchsia-500 hover:from-violet-500 hover:to-fuchsia-400 text-white rounded-xl shadow-lg active:scale-95 transition-all flex items-center justify-center">
+                            <i data-lucide="send" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Facts Highlights -->
+                <div class="glass-card rounded-2xl p-6 flex flex-col justify-between h-[520px]">
+                    <div class="pb-4 border-b border-white/5">
+                        <h4 class="text-sm font-bold font-outfit text-white flex items-center gap-2">
+                            <i data-lucide="award" class="w-4 h-4 text-fuchsia-400"></i>
+                            Destaques Estatísticos
+                        </h4>
+                    </div>
+                    <div class="flex-1 py-4 space-y-4 overflow-y-auto">
+                        <!-- Most popular Urna model -->
+                        <div class="bg-white/[0.02] border border-white/5 p-3.5 rounded-xl space-y-2">
+                            <h5 class="text-[11px] font-bold text-gray-400 uppercase tracking-widest flex justify-between">
+                                <span>Urna Predominante</span>
+                                <span id="quickStatUrnaName" class="text-violet-400 font-black">Nenhuma</span>
+                            </h5>
+                            <p id="quickStatUrnaCount" class="text-[10px] text-gray-500">0 seções ativas</p>
+                        </div>
+                        
+                        <!-- Maximum turnout section -->
+                        <div class="bg-white/[0.02] border border-white/5 p-3.5 rounded-xl space-y-2">
+                            <h5 class="text-[11px] font-bold text-gray-400 uppercase tracking-widest flex justify-between">
+                                <span>Maior Comparecimento Seção</span>
+                                <span id="quickStatTurnoutSection" class="text-fuchsia-400 font-black">Nenhuma</span>
+                            </h5>
+                            <p id="quickStatTurnoutDetails" class="text-[10px] text-gray-500">0% de presença</p>
+                        </div>
+
+                        <!-- Top 3 Voting places with most sections -->
+                        <div class="bg-white/[0.02] border border-white/5 p-4 rounded-xl space-y-3">
+                            <h5 class="text-xs font-bold text-gray-300 uppercase tracking-widest">Maiores Colégios Eleitorais</h5>
+                            <div id="quickStatsTopColleges" class="space-y-2 text-xs">
+                                <p class="text-gray-500 italic">Carregando dados...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pt-4 border-t border-white/5 text-[10px] text-gray-500 flex justify-between">
+                        <span>Dados de Seções do TSE</span>
+                        <span>100% Consolidado</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Section Table -->
+            <div class="glass-card rounded-2xl p-6 space-y-6">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/5 pb-4">
+                    <div class="space-y-1">
+                        <h4 class="text-sm font-bold font-outfit text-white flex items-center gap-2">
+                            <i data-lucide="list-filter" class="w-4 h-4 text-violet-400"></i>
+                            Tabela Detalhada de Seções
+                        </h4>
+                        <p class="text-xs text-gray-400">Navegue e ordene as seções eleitorais de acordo com abstenção ou comparecimento.</p>
+                    </div>
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                        <div class="relative">
+                            <i data-lucide="search" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"></i>
+                            <input type="text" id="tableSearch" placeholder="Buscar local ou seção..." class="glass-input pl-10 pr-4 py-2.5 text-xs min-w-[240px]" oninput="handleTableSearch()">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Table Component -->
+                <div class="overflow-x-auto border border-white/5 rounded-xl bg-gray-950/20">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="border-b border-white/10 bg-white/[0.02] text-gray-400 font-semibold">
+                                <th class="px-5 py-3.5 cursor-pointer hover:text-white transition-colors" onclick="sortTable('NM_MUNICIPIO')">
+                                    Município <span id="sort_NM_MUNICIPIO" class="ml-1 text-[10px]"></span>
+                                </th>
+                                <th class="px-5 py-3.5 cursor-pointer hover:text-white transition-colors" onclick="sortTable('NR_SECAO')">
+                                    Seção <span id="sort_NR_SECAO" class="ml-1 text-[10px]"></span>
+                                </th>
+                                <th class="px-5 py-3.5 cursor-pointer hover:text-white transition-colors" onclick="sortTable('NM_LOCAL_VOTACAO')">
+                                    Local de Votação <span id="sort_NM_LOCAL_VOTACAO" class="ml-1 text-[10px]"></span>
+                                </th>
+                                <th class="px-5 py-3.5 cursor-pointer hover:text-white transition-colors text-right" onclick="sortTable('QT_APTOS')">
+                                    Aptos <span id="sort_QT_APTOS" class="ml-1 text-[10px]"></span>
+                                </th>
+                                <th class="px-5 py-3.5 cursor-pointer hover:text-white transition-colors text-right" onclick="sortTable('QT_COMPARECIMENTO')">
+                                    Compareceu (%) <span id="sort_QT_COMPARECIMENTO" class="ml-1 text-[10px]"></span>
+                                </th>
+                                <th class="px-5 py-3.5 cursor-pointer hover:text-white transition-colors text-right" onclick="sortTable('QT_ABSTENCOES')">
+                                    Abstenção (%) <span id="sort_QT_ABSTENCOES" class="ml-1 text-[10px]"></span>
+                                </th>
+                                <th class="px-5 py-3.5 cursor-pointer hover:text-white transition-colors text-right" onclick="sortTable('DS_MODELO_URNA')">
+                                    Urna <span id="sort_DS_MODELO_URNA" class="ml-1 text-[10px]"></span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="sectionsTableBody" class="divide-y divide-white/5 text-gray-300">
+                            <tr>
+                                <td colspan="7" class="text-center py-8 text-gray-500 italic">Carregue um arquivo por seção para começar.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Table Pagination -->
+                <div class="flex items-center justify-between pt-2">
+                    <span id="tablePaginationInfo" class="text-xs text-gray-500">Mostrando 0 de 0 linhas</span>
+                    <div class="flex items-center space-x-2">
+                        <button id="btnPrevPage" onclick="prevPage()" class="p-2 border border-white/5 bg-white/5 hover:bg-white/10 rounded-lg text-gray-400 hover:text-white disabled:opacity-30 disabled:pointer-events-none transition-colors">
+                            <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                        </button>
+                        <span id="tableCurrentPage" class="text-xs font-semibold px-3 py-1 bg-white/5 rounded-lg border border-white/5 text-white">1</span>
+                        <button id="btnNextPage" onclick="nextPage()" class="p-2 border border-white/5 bg-white/5 hover:bg-white/10 rounded-lg text-gray-400 hover:text-white disabled:opacity-30 disabled:pointer-events-none transition-colors">
+                            <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <footer class="border-t border-white/5 bg-gray-950/60 py-6 text-center text-xs text-gray-500">
+        <p>© 2026 Dashboard Premium TSE - Seções Eleitorais e Urnas. Processado 100% localmente.</p>
+    </footer>
+
+    <!-- Collapsible Dev Diagnostic Console -->
+    <div id="devConsole" class="fixed bottom-4 right-4 z-[999] w-80 md:w-96 glass-card rounded-2xl overflow-hidden border border-red-500/20 shadow-2xl flex flex-col transition-all duration-300 max-h-[40px] hover:max-h-[300px]">
+        <div class="bg-gray-950/80 px-4 py-2 flex items-center justify-between cursor-pointer border-b border-white/5" onclick="toggleConsole()">
+            <span class="text-[10px] font-bold tracking-wider uppercase flex items-center gap-1.5 text-red-400">
+                <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse"></span>
+                Console de Diagnóstico (Clique para expandir)
+            </span>
+            <i data-lucide="chevron-up" id="consoleChevron" class="w-4 h-4 text-gray-400 transition-transform"></i>
+        </div>
+        <div id="consoleLogArea" class="flex-1 p-3 bg-black/80 font-mono text-[10px] text-gray-300 overflow-y-auto space-y-1.5 h-[260px] leading-normal selection:bg-red-500/20">
+            <div class="text-gray-500">// Console ativo. Diagnósticos de importação em tempo real.</div>
+        </div>
+    </div>
+
+    <!-- CODE LOGIC -->
+    <script>
+        // Configuração do Bucket Remoto (Substitua pela sua URL pública do R2 após criá-lo)
+        const REMOTE_BUCKET_URL = 'https://SEU_BUCKET_PUBLICO.r2.dev/';
+
+        function getDataSourceUrl(directory, filename) {
+            const host = window.location.hostname;
+            if (host === 'localhost' || host === '127.0.0.1' || window.location.protocol === 'file:') {
+                return `../${directory}/${filename}`;
+            }
+            return `${REMOTE_BUCKET_URL}${directory}/${filename}`;
+        }
+
+        // Global variables
+        let rawSectionRecords = [];
+        let uniqueSections = [];
+        let filteredSections = [];
+        let uniqueMunicipalities = [];
+        let uniqueLocais = [];
+        let activeMunicipality = 'ALL';
+        let activeLocal = 'ALL';
+
+        // Pagination and Sorting
+        let currentPage = 1;
+        const recordsPerPage = 10;
+        let activeSortColumn = 'QT_APTOS';
+        let sortAscending = false;
+        let activeTableSearch = '';
+
+        // Chart instances
+        let urnasChartInstance = null;
+        let attendanceChartInstance = null;
+        let abstentionLocalChartInstance = null;
+
+        // Console
+        function toggleConsole() {
+            const consoleEl = document.getElementById('devConsole');
+            const chevron = document.getElementById('consoleChevron');
+            if (consoleEl.style.maxHeight === '300px') {
+                consoleEl.style.maxHeight = '40px';
+                if (chevron) chevron.style.transform = 'rotate(0deg)';
+            } else {
+                consoleEl.style.maxHeight = '300px';
+                if (chevron) chevron.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        window.onerror = function(message, source, lineno, colno, error) {
+            logToDevConsole(`❌ ERRO: ${message} (Linha ${lineno}:${colno})`, 'error');
+            return false;
+        };
+
+        window.onunhandledrejection = function(event) {
+            logToDevConsole(`❌ PROMESSA REJEITADA: ${event.reason}`, 'error');
+        };
+
+        function logToDevConsole(text, type = 'info') {
+            const area = document.getElementById('consoleLogArea');
+            if (!area) return;
+            const line = document.createElement('div');
+            line.className = type === 'error' ? 'text-red-400 font-bold' : 'text-blue-400';
+            line.innerText = text;
+            area.appendChild(line);
+            area.scrollTop = area.scrollHeight;
+        }
+
+        // Navigation & Load Helpers
+        function showManualUpload() {
+            document.getElementById('autoSelectorCard').classList.add('hidden');
+            document.getElementById('corsErrorCard').classList.remove('hidden');
+        }
+
+        function hideManualUpload() {
+            document.getElementById('corsErrorCard').classList.add('hidden');
+            document.getElementById('autoSelectorCard').classList.remove('hidden');
+        }
+
+        async function fetchWithProgress(url, onProgress) {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const contentLength = response.headers.get('content-length');
+            if (!contentLength) {
+                const buffer = await response.arrayBuffer();
+                const decoder = new TextDecoder('iso-8859-1');
+                return decoder.decode(buffer);
+            }
+
+            const total = parseInt(contentLength, 10);
+            let loaded = 0;
+            const reader = response.body.getReader();
+            const chunks = [];
+
+            while(true) {
+                const {done, value} = await reader.read();
+                if (done) break;
+                chunks.push(value);
+                loaded += value.byteLength;
+                if (onProgress) {
+                    onProgress(loaded, total);
+                }
+            }
+
+            const allChunks = new Uint8Array(loaded);
+            let position = 0;
+            for (const chunk of chunks) {
+                allChunks.set(chunk, position);
+                position += chunk.byteLength;
+            }
+
+            const decoder = new TextDecoder('iso-8859-1');
+            return decoder.decode(allChunks);
+        }
+
+        async function loadStateDataAuto() {
+            const state = document.getElementById('stateSelector').value;
+            const filename = `detalhe_votacao_secao_2024_${state}.csv`;
+            const url = getDataSourceUrl('detalhe_votacao_secao_2024', filename);
+
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            const progressBar = document.getElementById('loadingProgressBar');
+            const progressPercent = document.getElementById('loadingProgressPercent');
+            const progressRecords = document.getElementById('loadingProgressRecords');
+            
+            document.getElementById('loadingOverlayTitle').innerText = 'Buscando Dados...';
+            document.getElementById('loadingOverlaySub').innerText = `Carregando detalhes das seções para ${state}...`;
+            loadingOverlay.classList.remove('hidden');
+            progressBar.style.width = '5%';
+            progressPercent.innerText = '5%';
+            progressRecords.innerText = 'Iniciando conexão...';
+
+            logToDevConsole(`→ Tentando carregar dados automaticamente para UF: ${state}...`);
+
+            try {
+                const text = await fetchWithProgress(url, (loaded, total) => {
+                    const pct = Math.round((loaded / total) * 60) + 5;
+                    progressBar.style.width = `${pct}%`;
+                    progressPercent.innerText = `${pct}%`;
+                    const loadedMB = (loaded / 1024 / 1024).toFixed(1);
+                    const totalMB = (total / 1024 / 1024).toFixed(1);
+                    progressRecords.innerText = `Baixados ${loadedMB}MB de ${totalMB}MB...`;
+                });
+
+                logToDevConsole(`✓ Download concluído. Iniciando análise sintática CSV...`);
+                progressBar.style.width = '70%';
+                progressPercent.innerText = '70%';
+                progressRecords.innerText = 'Analisando linhas do CSV...';
+
+                Papa.parse(text, {
+                    header: true,
+                    skipEmptyLines: true,
+                    delimiter: ';',
+                    transformHeader: function(header) {
+                        if (!header) return '';
+                        return header.replace(/["']/g, '').trim().toUpperCase();
+                    },
+                    complete: function(results) {
+                        progressBar.style.width = '90%';
+                        progressPercent.innerText = '90%';
+                        progressRecords.innerText = 'Agrupando seções eleitorais...';
+                        
+                        setTimeout(() => {
+                            parseAndValidateData(results.data, filename);
+                        }, 50);
+                    },
+                    error: function(err) {
+                        logToDevConsole("❌ Erro no PapaParse: " + err.message, "error");
+                        alert('Erro ao carregar o CSV: ' + err.message);
+                        loadingOverlay.classList.add('hidden');
+                    }
+                });
+            } catch (error) {
+                console.error(error);
+                logToDevConsole(`❌ Erro no carregamento automático (CORS ou Arquivo Ausente): ${error.message}`, 'error');
+                
+                loadingOverlay.classList.add('hidden');
+                document.getElementById('fallbackFileName').innerText = filename;
+                showManualUpload();
+            }
+        }
+
+        // Initialize Page
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            setupDragAndDrop();
+            logToDevConsole("✓ Painel de Seções Eleitorais iniciado e pronto.");
+        });
+
+        // Setup File drag and drop
+        function setupDragAndDrop() {
+            const dropzone = document.getElementById('dropzone');
+            
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropzone.addEventListener(eventName, (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    dropzone.classList.add('border-violet-400', 'bg-white/[0.04]');
+                }, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropzone.addEventListener(eventName, (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    dropzone.classList.remove('border-violet-400', 'bg-white/[0.04]');
+                }, false);
+            });
+
+            dropzone.addEventListener('drop', (e) => {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                if (files.length > 0) {
+                    processSectionsCSV(files[0]);
+                }
+            }, false);
+
+            document.getElementById('csvFileInput').addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    processSectionsCSV(e.target.files[0]);
+                }
+            });
+        }
+
+        // CSV processing engine in Latin-1
+        function processSectionsCSV(file) {
+            if (!file.name.endsWith('.csv')) {
+                alert('Por favor, envie apenas arquivos CSV.');
+                return;
+            }
+
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            const progressBar = document.getElementById('loadingProgressBar');
+            const progressPercent = document.getElementById('loadingProgressPercent');
+            const progressRecords = document.getElementById('loadingProgressRecords');
+            
+            loadingOverlay.classList.remove('hidden');
+            progressBar.style.width = '10%';
+            progressPercent.innerText = '10%';
+            progressRecords.innerText = 'Lendo arquivo...';
+
+            const reader = new FileReader();
+            reader.readAsText(file, "ISO-8859-1");
+
+            reader.onprogress = (event) => {
+                if (event.lengthComputable) {
+                    const percent = Math.round((event.loaded / event.total) * 40) + 10;
+                    progressBar.style.width = `${percent}%`;
+                    progressPercent.innerText = `${percent}%`;
+                }
+            };
+
+            reader.onload = function(e) {
+                const text = e.target.result;
+                progressBar.style.width = '60%';
+                progressPercent.innerText = '60%';
+                progressRecords.innerText = 'Analisando seções do CSV...';
+
+                Papa.parse(text, {
+                    header: true,
+                    skipEmptyLines: true,
+                    delimiter: ';',
+                    transformHeader: function(header) {
+                        if (!header) return '';
+                        return header.replace(/["']/g, '').trim().toUpperCase();
+                    },
+                    complete: function(results) {
+                        progressBar.style.width = '90%';
+                        progressPercent.innerText = '90%';
+                        progressRecords.innerText = 'Agrupando seções eleitorais...';
+                        
+                        setTimeout(() => {
+                            parseAndValidateData(results.data, file.name);
+                        }, 50);
+                    },
+                    error: function(err) {
+                        logToDevConsole("❌ Erro no PapaParse: " + err.message, "error");
+                        alert('Erro ao carregar o CSV: ' + err.message);
+                        loadingOverlay.classList.add('hidden');
+                    }
+                });
+            };
+        }
+
+        // Validate and clean TSE section voting database
+        function parseAndValidateData(rawRecords, filename) {
+            try {
+                rawSectionRecords = [];
+                const municipalitiesSet = new Set();
+                let stateCode = 'TSE';
+
+                if (!rawRecords || rawRecords.length === 0) {
+                    alert("O arquivo CSV está vazio ou o delimitador ponto e vírgula (;) falhou.");
+                    loadingOverlay.classList.add('hidden');
+                    return;
+                }
+
+                // Extract state code
+                const stateMatch = filename.match(/_2024_([A-Z]{2})\.csv/i);
+                if (stateMatch && stateMatch[1]) {
+                    stateCode = stateMatch[1].toUpperCase();
+                }
+
+                const firstRow = rawRecords[0];
+                const keyMap = {};
+                Object.keys(firstRow).forEach(k => {
+                    keyMap[k] = k;
+                });
+
+                logToDevConsole("✓ Colunas de seções mapeadas.");
+
+                const colMun = keyMap['NM_MUNICIPIO'] || 'NM_MUNICIPIO';
+                const colZona = keyMap['NR_ZONA'] || 'NR_ZONA';
+                const colSecao = keyMap['NR_SECAO'] || 'NR_SECAO';
+                const colCargo = keyMap['DS_CARGO'] || 'DS_CARGO';
+                const colAptos = keyMap['QT_APTOS'] || 'QT_APTOS';
+                const colCompareceu = keyMap['QT_COMPARECIMENTO'] || 'QT_COMPARECIMENTO';
+                const colAbstencoes = keyMap['QT_ABSTENCOES'] || 'QT_ABSTENCOES';
+                const colBrancos = keyMap['QT_VOTOS_BRANCOS'] || 'QT_VOTOS_BRANCOS';
+                const colNulos = keyMap['QT_VOTOS_NULOS'] || 'QT_VOTOS_NULOS';
+                const colUrna = keyMap['DS_MODELO_URNA'] || 'DS_MODELO_URNA';
+                const colLocal = keyMap['NM_LOCAL_VOTACAO'] || 'NM_LOCAL_VOTACAO';
+                const colEnd = keyMap['DS_LOCAL_VOTACAO_ENDERECO'] || 'DS_LOCAL_VOTACAO_ENDERECO';
+
+                for (let i = 0; i < rawRecords.length; i++) {
+                    const row = rawRecords[i];
+                    if (!row[colMun] || !row[colSecao]) continue;
+
+                    const record = {
+                        NM_MUNICIPIO: row[colMun].trim(),
+                        NR_ZONA: parseInt(row[colZona]) || 0,
+                        NR_SECAO: parseInt(row[colSecao]) || 0,
+                        DS_CARGO: (row[colCargo] || 'Prefeito').trim(),
+                        QT_APTOS: parseInt(row[colAptos]) || 0,
+                        QT_COMPARECIMENTO: parseInt(row[colCompareceu]) || 0,
+                        QT_ABSTENCOES: parseInt(row[colAbstencoes]) || 0,
+                        QT_VOTOS_BRANCOS: parseInt(row[colBrancos]) || 0,
+                        QT_VOTOS_NULOS: parseInt(row[colNulos]) || 0,
+                        DS_MODELO_URNA: (row[colUrna] || 'UE N/A').trim(),
+                        NM_LOCAL_VOTACAO: (row[colLocal] || 'Local Não Informado').trim(),
+                        DS_LOCAL_VOTACAO_ENDERECO: (row[colEnd] || '').trim()
+                    };
+
+                    rawSectionRecords.push(record);
+                    municipalitiesSet.add(record.NM_MUNICIPIO);
+                }
+
+                uniqueMunicipalities = Array.from(municipalitiesSet).sort();
+                
+                // Consolidate Unique Sections to avoid Double-Counting (Prefeito vs Vereador)
+                const sectionsKeys = {};
+                rawSectionRecords.forEach(r => {
+                    // Unique key of a section
+                    const key = `${r.NM_MUNICIPIO}_${r.NR_ZONA}_${r.NR_SECAO}`;
+                    if (!sectionsKeys[key]) {
+                        sectionsKeys[key] = {
+                            NM_MUNICIPIO: r.NM_MUNICIPIO,
+                            NR_ZONA: r.NR_ZONA,
+                            NR_SECAO: r.NR_SECAO,
+                            QT_APTOS: r.QT_APTOS,
+                            QT_COMPARECIMENTO: r.QT_COMPARECIMENTO,
+                            QT_ABSTENCOES: r.QT_ABSTENCOES,
+                            QT_VOTOS_BRANCOS: r.QT_VOTOS_BRANCOS,
+                            QT_VOTOS_NULOS: r.QT_VOTOS_NULOS,
+                            DS_MODELO_URNA: r.DS_MODELO_URNA,
+                            NM_LOCAL_VOTACAO: r.NM_LOCAL_VOTACAO,
+                            DS_LOCAL_VOTACAO_ENDERECO: r.DS_LOCAL_VOTACAO_ENDERECO
+                        };
+                    } else {
+                        // In case of variances, keep the maximum
+                        sectionsKeys[key].QT_APTOS = Math.max(sectionsKeys[key].QT_APTOS, r.QT_APTOS);
+                        sectionsKeys[key].QT_COMPARECIMENTO = Math.max(sectionsKeys[key].QT_COMPARECIMENTO, r.QT_COMPARECIMENTO);
+                        sectionsKeys[key].QT_ABSTENCOES = Math.max(sectionsKeys[key].QT_ABSTENCOES, r.QT_ABSTENCOES);
+                    }
+                });
+
+                uniqueSections = Object.values(sectionsKeys);
+
+                // Set initial filters
+                const mFilter = document.getElementById('municipalityFilter');
+                mFilter.innerHTML = '<option value="ALL">Todos os Municípios</option>';
+                uniqueMunicipalities.forEach(mun => {
+                    const opt = document.createElement('option');
+                    opt.value = mun;
+                    opt.innerText = mun;
+                    mFilter.appendChild(opt);
+                });
+
+                updateLocalFilterOptions();
+
+                // Update UI headers
+                document.getElementById('stateBadge').innerText = stateCode;
+                document.getElementById('loadedFileName').innerText = filename;
+                document.getElementById('fileStatusBadge').classList.remove('hidden');
+                
+                // Reveal main panel
+                document.getElementById('uploadZoneContainer').classList.add('hidden');
+                document.getElementById('loadingOverlay').classList.add('hidden');
+                const mainPanel = document.getElementById('dashboardContent');
+                mainPanel.classList.remove('hidden');
+                setTimeout(() => mainPanel.classList.add('opacity-100'), 50);
+
+                // Setup Change events
+                mFilter.onchange = (e) => {
+                    activeMunicipality = e.target.value;
+                    activeLocal = 'ALL';
+                    updateLocalFilterOptions();
+                    updateSectionsDashboard();
+                };
+                
+                document.getElementById('localFilter').onchange = (e) => {
+                    activeLocal = e.target.value;
+                    updateSectionsDashboard();
+                };
+
+                logToDevConsole(`✓ Importadas ${uniqueSections.length.toLocaleString('pt-BR')} seções consolidadas únicas.`);
+                
+                updateSectionsDashboard();
+
+                addAssistantMessage(`📊 **Arquivo de seções eleitorais carregado com sucesso!**
+                * **Arquivo:** \`${filename}\`
+                * **Total de Urnas (Seções):** \`${uniqueSections.length.toLocaleString('pt-BR')}\`
+                * **Municípios Cobertos:** \`${uniqueMunicipalities.length}\`
+                
+                Como posso ajudar você a analisar a abstenção física ou os modelos de urna eletrônica hoje?`);
+
+            } catch (err) {
+                logToDevConsole("❌ Erro em parseAndValidateData: " + err.message, "error");
+                console.error(err);
+                alert("Erro ao ler colunas de seções: " + err.message);
+                document.getElementById('loadingOverlay').classList.add('hidden');
+            }
+        }
+
+        // Update schools dropdown option based on selected city
+        function updateLocalFilterOptions() {
+            const localFilter = document.getElementById('localFilter');
+            localFilter.innerHTML = '<option value="ALL">Todos os Locais</option>';
+            
+            let filteredLocals = uniqueSections;
+            if (activeMunicipality !== 'ALL') {
+                filteredLocals = uniqueSections.filter(s => s.NM_MUNICIPIO === activeMunicipality);
+            }
+
+            const localsSet = new Set();
+            filteredLocals.forEach(s => localsSet.add(s.NM_LOCAL_VOTACAO));
+            uniqueLocais = Array.from(localsSet).sort();
+
+            uniqueLocais.forEach(loc => {
+                const opt = document.createElement('option');
+                opt.value = loc;
+                opt.innerText = loc;
+                localFilter.appendChild(opt);
+            });
+            localFilter.value = 'ALL';
+        }
+
+        // Aggregate stats
+        function updateSectionsDashboard() {
+            try {
+                // Apply filters
+                filteredSections = uniqueSections;
+                if (activeMunicipality !== 'ALL') {
+                    filteredSections = filteredSections.filter(s => s.NM_MUNICIPIO === activeMunicipality);
+                }
+                if (activeLocal !== 'ALL') {
+                    filteredSections = filteredSections.filter(s => s.NM_LOCAL_VOTACAO === activeLocal);
+                }
+
+                // KPIs
+                let totalSecoes = filteredSections.length;
+                
+                const localsSet = new Set();
+                let totalAptos = 0;
+                let totalComparecimento = 0;
+                let totalAbstencoes = 0;
+
+                filteredSections.forEach(s => {
+                    localsSet.add(`${s.NM_MUNICIPIO}_${s.NM_LOCAL_VOTACAO}`);
+                    totalAptos += s.QT_APTOS;
+                    totalComparecimento += s.QT_COMPARECIMENTO;
+                    totalAbstencoes += s.QT_ABSTENCOES;
+                });
+
+                const totalAptosGuard = totalAptos || 1;
+                const pctAbstencao = ((totalAbstencoes / totalAptosGuard) * 100).toFixed(2);
+
+                document.getElementById('kpiTotalSecoes').innerText = totalSecoes.toLocaleString('pt-BR');
+                document.getElementById('kpiTotalLocais').innerText = localsSet.size.toLocaleString('pt-BR');
+                document.getElementById('kpiTotalAptos').innerText = totalAptos.toLocaleString('pt-BR');
+                document.getElementById('kpiTotalAbstencao').innerText = totalAbstencoes.toLocaleString('pt-BR');
+                document.getElementById('kpiAbstencaoPct').innerText = `${pctAbstencao}% de abstenção`;
+
+                // Update highlights
+                calculateSidebarHighlights(filteredSections);
+
+                // Render Charts
+                renderSectionsCharts(filteredSections, totalComparecimento, totalAbstencoes);
+
+                // Table
+                currentPage = 1;
+                renderSectionsTable();
+
+            } catch (err) {
+                logToDevConsole("❌ Erro em updateSectionsDashboard: " + err.message, "error");
+                console.error(err);
+            }
+        }
+
+        // Sidebar Highlights
+        function calculateSidebarHighlights(sections) {
+            // Urna models count
+            const urnasCount = {};
+            let topTurnoutSection = null;
+            let topTurnoutRate = -1;
+
+            sections.forEach(s => {
+                urnasCount[s.DS_MODELO_URNA] = (urnasCount[s.DS_MODELO_URNA] || 0) + 1;
+                
+                const rate = s.QT_APTOS > 0 ? ((s.QT_COMPARECIMENTO / s.QT_APTOS) * 100) : 0;
+                if (rate > topTurnoutRate) {
+                    topTurnoutRate = rate;
+                    topTurnoutSection = s;
+                }
+            });
+
+            // Most popular Urna
+            const sortedUrnas = Object.entries(urnasCount).sort((a,b) => b[1] - a[1]);
+            if (sortedUrnas.length > 0) {
+                document.getElementById('quickStatUrnaName').innerText = sortedUrnas[0][0];
+                document.getElementById('quickStatUrnaCount').innerText = `${sortedUrnas[0][1].toLocaleString('pt-BR')} seções ativas`;
+            } else {
+                document.getElementById('quickStatUrnaName').innerText = 'Nenhuma';
+                document.getElementById('quickStatUrnaCount').innerText = '0 seções';
+            }
+
+            // Top turnout section
+            if (topTurnoutSection) {
+                document.getElementById('quickStatTurnoutSection').innerText = `Seção ${topTurnoutSection.NR_SECAO} (${topTurnoutSection.NM_MUNICIPIO})`;
+                document.getElementById('quickStatTurnoutDetails').innerText = `${topTurnoutRate.toFixed(1)}% pres (${topTurnoutSection.QT_COMPARECIMENTO} eleitores)`;
+            } else {
+                document.getElementById('quickStatTurnoutSection').innerText = 'Nenhuma';
+                document.getElementById('quickStatTurnoutDetails').innerText = '0% pres';
+            }
+
+            // Top 3 colégios eleitorais by section count
+            const schoolsSecs = {};
+            sections.forEach(s => {
+                const key = `${s.NM_MUNICIPIO} - ${s.NM_LOCAL_VOTACAO}`;
+                schoolsSecs[key] = (schoolsSecs[key] || 0) + 1;
+            });
+
+            const sortedSchools = Object.entries(schoolsSecs).sort((a,b) => b[1] - a[1]).slice(0, 3);
+            const collegesContainer = document.getElementById('quickStatsTopColleges');
+            collegesContainer.innerHTML = '';
+
+            if (sortedSchools.length === 0) {
+                collegesContainer.innerHTML = '<p class="text-gray-500 italic">Nenhum local ativo.</p>';
+                return;
+            }
+
+            const maxSecs = sortedSchools[0][1] || 1;
+            sortedSchools.forEach(([school, count], idx) => {
+                const pct = (count / maxSecs) * 100;
+                const item = document.createElement('div');
+                item.className = 'space-y-1';
+                item.innerHTML = `
+                    <div class="flex justify-between text-[10px]">
+                        <span class="font-bold text-gray-200 truncate max-w-[170px]">${idx+1}º. ${school}</span>
+                        <span class="text-violet-400 font-bold">${count} seções</span>
+                    </div>
+                    <div class="w-full bg-white/5 h-1 rounded-full">
+                        <div class="bg-gradient-to-r from-violet-400 to-fuchsia-500 h-full" style="width: ${pct}%"></div>
+                    </div>
+                `;
+                collegesContainer.appendChild(item);
+            });
+        }
+
+        // Render Charts via Chart.js
+        function renderSectionsCharts(sections, compareceu, abstenções) {
+            if (urnasChartInstance) urnasChartInstance.destroy();
+            if (attendanceChartInstance) attendanceChartInstance.destroy();
+            if (abstentionLocalChartInstance) abstentionLocalChartInstance.destroy();
+
+            // Chart 1: Urna Models (Doughnut)
+            const urnasCount = {};
+            sections.forEach(s => {
+                urnasCount[s.DS_MODELO_URNA] = (urnasCount[s.DS_MODELO_URNA] || 0) + 1;
+            });
+
+            const sortedUrnas = Object.entries(urnasCount).sort((a,b) => b[1] - a[1]).slice(0, 5);
+
+            const ctxUrnas = document.getElementById('urnasChart').getContext('2d');
+            urnasChartInstance = new Chart(ctxUrnas, {
+                type: 'doughnut',
+                data: {
+                    labels: sortedUrnas.map(u => u[0]),
+                    datasets: [{
+                        data: sortedUrnas.map(u => u[1]),
+                        backgroundColor: [
+                            'rgba(139, 92, 246, 0.75)',
+                            'rgba(167, 139, 250, 0.75)',
+                            'rgba(217, 70, 239, 0.75)',
+                            'rgba(244, 63, 94, 0.75)',
+                            'rgba(156, 163, 175, 0.75)'
+                        ],
+                        borderWidth: 1.5,
+                        hoverOffset: 12
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { color: '#9ca3af', font: { family: 'Inter', size: 10 } }
+                        }
+                    }
+                }
+            });
+
+            // Chart 2: Turnout (Doughnut)
+            const ctxAtt = document.getElementById('attendanceChart').getContext('2d');
+            attendanceChartInstance = new Chart(ctxAtt, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Compareceu', 'Abstenção'],
+                    datasets: [{
+                        data: [compareceu, abstenções],
+                        backgroundColor: ['rgba(217, 70, 239, 0.75)', 'rgba(239, 68, 68, 0.75)'],
+                        borderWidth: 1.5,
+                        hoverOffset: 12
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { color: '#9ca3af', font: { family: 'Inter', size: 11 } }
+                        }
+                    }
+                }
+            });
+
+            // Chart 3: Top 10 Schools with Highest Abstention (Horizontal Bar)
+            // Group by physical school name (within the current municipality scope)
+            const schoolAbsts = {};
+            sections.forEach(s => {
+                const key = s.NM_LOCAL_VOTACAO;
+                if (!schoolAbsts[key]) {
+                    schoolAbsts[key] = { aptos: 0, abst: 0 };
+                }
+                schoolAbsts[key].aptos += s.QT_APTOS;
+                schoolAbsts[key].abst += s.QT_ABSTENCOES;
+            });
+
+            const sortedSchools = Object.entries(schoolAbsts)
+                .map(([name, v]) => ({
+                    name,
+                    rate: v.aptos > 0 ? ((v.abst / v.aptos) * 100) : 0
+                }))
+                .sort((a,b) => b.rate - a.rate)
+                .slice(0, 10);
+
+            const ctxLocal = document.getElementById('abstentionLocalChart').getContext('2d');
+            abstentionLocalChartInstance = new Chart(ctxLocal, {
+                type: 'bar',
+                data: {
+                    labels: sortedSchools.map(s => s.name.substring(0, 18) + '...'),
+                    datasets: [{
+                        data: sortedSchools.map(s => s.rate),
+                        backgroundColor: 'rgba(239, 68, 68, 0.55)',
+                        borderColor: 'rgba(239, 68, 68, 0.9)',
+                        borderWidth: 1.5,
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            grid: { color: 'rgba(255,255,255,0.04)' },
+                            ticks: { 
+                                color: '#9ca3af', 
+                                font: { family: 'Inter', size: 9 },
+                                callback: val => `${val.toFixed(1)}%`
+                            }
+                        },
+                        y: {
+                            grid: { display: false },
+                            ticks: { color: '#9ca3af', font: { family: 'Inter', size: 9 } }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+        }
+
+        // Consolidated list table
+        function getFilteredTableRecords() {
+            let records = filteredSections;
+
+            if (activeTableSearch) {
+                const searchLower = activeTableSearch.toLowerCase();
+                records = records.filter(s => 
+                    s.NM_MUNICIPIO.toLowerCase().includes(searchLower) ||
+                    s.NM_LOCAL_VOTACAO.toLowerCase().includes(searchLower) ||
+                    s.NR_SECAO.toString().includes(searchLower) ||
+                    s.DS_MODELO_URNA.toLowerCase().includes(searchLower)
+                );
+            }
+
+            records.sort((a, b) => {
+                let valA = a[activeSortColumn];
+                let valB = b[activeSortColumn];
+
+                if (typeof valA === 'string') {
+                    return sortAscending ? valA.localeCompare(valB) : valB.localeCompare(valA);
+                } else {
+                    return sortAscending ? valA - valB : valB - valA;
+                }
+            });
+
+            return records;
+        }
+
+        function renderSectionsTable() {
+            const records = getFilteredTableRecords();
+            const tableBody = document.getElementById('sectionsTableBody');
+            
+            const totalRecords = records.length;
+            const totalPages = Math.ceil(totalRecords / recordsPerPage) || 1;
+            if (currentPage > totalPages) currentPage = totalPages;
+
+            const startIndex = (currentPage - 1) * recordsPerPage;
+            const endIndex = Math.min(startIndex + recordsPerPage, totalRecords);
+
+            tableBody.innerHTML = '';
+            
+            if (totalRecords === 0) {
+                tableBody.innerHTML = `<tr><td colspan="7" class="text-center py-8 text-gray-500 italic">Nenhuma seção localizada.</td></tr>`;
+                document.getElementById('tablePaginationInfo').innerText = `Mostrando 0 de 0 linhas`;
+                document.getElementById('btnPrevPage').disabled = true;
+                document.getElementById('btnNextPage').disabled = true;
+                return;
+            }
+
+            const pageRecords = records.slice(startIndex, endIndex);
+
+            pageRecords.forEach(s => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-white/[0.02] transition-colors';
+                
+                const aptos = s.QT_APTOS || 1;
+                const pctPres = ((s.QT_COMPARECIMENTO / aptos) * 100).toFixed(2);
+                const pctAbst = ((s.QT_ABSTENCOES / aptos) * 100).toFixed(2);
+
+                tr.innerHTML = `
+                    <td class="px-5 py-3.5 font-medium text-white">${s.NM_MUNICIPIO}</td>
+                    <td class="px-5 py-3.5 text-gray-400 font-semibold">Zona ${s.NR_ZONA} / Seção ${s.NR_SECAO}</td>
+                    <td class="px-5 py-3.5">
+                        <div class="text-gray-200 truncate max-w-[220px] font-medium" title="${s.NM_LOCAL_VOTACAO}">${s.NM_LOCAL_VOTACAO}</div>
+                        <div class="text-[10px] text-gray-500 truncate max-w-[220px]">${s.DS_LOCAL_VOTACAO_ENDERECO}</div>
+                    </td>
+                    <td class="px-5 py-3.5 text-right font-bold text-gray-200">${s.QT_APTOS.toLocaleString('pt-BR')}</td>
+                    <td class="px-5 py-3.5 text-right font-medium text-fuchsia-400">${s.QT_COMPARECIMENTO.toLocaleString('pt-BR')} (${pctPres}%)</td>
+                    <td class="px-5 py-3.5 text-right font-medium text-red-400">${s.QT_ABSTENCOES.toLocaleString('pt-BR')} (${pctAbst}%)</td>
+                    <td class="px-5 py-3.5 text-right text-gray-400">
+                        <span class="px-2 py-0.5 rounded text-[10px] border border-white/10 bg-white/5 font-mono">
+                            ${s.DS_MODELO_URNA}
+                        </span>
+                    </td>
+                `;
+                tableBody.appendChild(tr);
+            });
+
+            document.getElementById('tablePaginationInfo').innerText = `Mostrando ${startIndex + 1}-${endIndex} de ${totalRecords} registros`;
+            document.getElementById('tableCurrentPage').innerText = currentPage;
+            document.getElementById('btnPrevPage').disabled = currentPage === 1;
+            document.getElementById('btnNextPage').disabled = currentPage === totalPages;
+
+            const columns = ['NM_MUNICIPIO', 'NR_SECAO', 'NM_LOCAL_VOTACAO', 'QT_APTOS', 'QT_COMPARECIMENTO', 'QT_ABSTENCOES', 'DS_MODELO_URNA'];
+            columns.forEach(col => {
+                const span = document.getElementById(`sort_${col}`);
+                if (span) {
+                    if (col === activeSortColumn) {
+                        span.innerHTML = sortAscending ? '▲' : '▼';
+                        span.className = 'ml-1 text-violet-400 font-bold';
+                    } else {
+                        span.innerHTML = '';
+                    }
+                }
+            });
+        }
+
+        function sortTable(column) {
+            if (activeSortColumn === column) {
+                sortAscending = !sortAscending;
+            } else {
+                activeSortColumn = column;
+                sortAscending = false;
+            }
+            renderSectionsTable();
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                renderSectionsTable();
+            }
+        }
+
+        function nextPage() {
+            const records = getFilteredTableRecords();
+            const totalPages = Math.ceil(records.length / recordsPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderSectionsTable();
+            }
+        }
+
+        function handleTableSearch() {
+            activeTableSearch = document.getElementById('tableSearch').value;
+            currentPage = 1;
+            renderSectionsTable();
+        }
+
+        // Q&A LOCAL ENGINE
+        function handleChatKeyPress(e) {
+            if (e.key === 'Enter') submitChat();
+        }
+
+        function askPreset(question) {
+            document.getElementById('chatInput').value = question;
+            submitChat();
+        }
+
+        function clearChat() {
+            const area = document.getElementById('chatMessageArea');
+            area.innerHTML = `
+                <div class="chat-assistant p-4 text-gray-300 max-w-[85%] space-y-3">
+                    <p>👋 Histórico limpo!</p>
+                    <p>Pronto para receber novas perguntas sobre as seções eleitorais de Roraima.</p>
+                </div>
+            `;
+        }
+
+        function addUserMessage(text) {
+            const area = document.getElementById('chatMessageArea');
+            const bubble = document.createElement('div');
+            bubble.className = 'chat-user p-4 text-gray-200 max-w-[85%] ml-auto';
+            bubble.innerHTML = text.replace(/\n/g, '<br>');
+            area.appendChild(bubble);
+            area.scrollTop = area.scrollHeight;
+        }
+
+        function addAssistantMessage(text) {
+            const area = document.getElementById('chatMessageArea');
+            const bubble = document.createElement('div');
+            bubble.className = 'chat-assistant p-4 text-gray-200 max-w-[85%] space-y-2';
+            
+            let parsedText = text
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                .replace(/`(.*?)`/g, '<code class="bg-white/5 border border-white/10 px-1 py-0.5 rounded text-violet-300">$1</code>')
+                .replace(/\n/g, '<br>');
+
+            bubble.innerHTML = parsedText;
+            area.appendChild(bubble);
+            area.scrollTop = area.scrollHeight;
+        }
+
+        function submitChat() {
+            const input = document.getElementById('chatInput');
+            const text = input.value.trim();
+            if (!text) return;
+
+            addUserMessage(text);
+            input.value = '';
+
+            setTimeout(() => {
+                const answer = querySectionsData(text);
+                addAssistantMessage(answer);
+            }, 150);
+        }
+
+        // Portuguese Q&A Parser for sections
+        function querySectionsData(query) {
+            if (uniqueSections.length === 0) {
+                return "⚠️ Por favor, carregue o arquivo CSV de seções primeiro!";
+            }
+
+            const cleanQuery = query.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+            // Look for municipality match
+            let queryCity = null;
+            for (let mun of uniqueMunicipalities) {
+                const cleanMun = mun.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                if (cleanQuery.includes(cleanMun)) {
+                    queryCity = mun;
+                    break;
+                }
+            }
+
+            const targetCity = queryCity || (activeMunicipality !== 'ALL' ? activeMunicipality : null);
+            const scopeLabel = targetCity ? `em **${targetCity}**` : `no geral (todos os municípios)`;
+            const localScopeSecs = targetCity ? uniqueSections.filter(s => s.NM_MUNICIPIO === targetCity) : uniqueSections;
+
+            // 1. QUERY: Highest Abstention School
+            if (cleanQuery.includes('maior abstencao') || cleanQuery.includes('mais abstencao') || cleanQuery.includes('escola que menos votou')) {
+                const schoolAbsts = {};
+                localScopeSecs.forEach(s => {
+                    const key = s.NM_LOCAL_VOTACAO;
+                    if (!schoolAbsts[key]) schoolAbsts[key] = { aptos: 0, abst: 0, mun: s.NM_MUNICIPIO };
+                    schoolAbsts[key].aptos += s.QT_APTOS;
+                    schoolAbsts[key].abst += s.QT_ABSTENCOES;
+                });
+
+                const sorted = Object.entries(schoolAbsts)
+                    .map(([name, v]) => ({
+                        name,
+                        rate: v.aptos > 0 ? ((v.abst / v.aptos) * 100) : 0,
+                        count: v.abst,
+                        mun: v.mun
+                    }))
+                    .sort((a,b) => b.rate - a.rate);
+
+                const top = sorted[0];
+                let response = `🚨 O local de votação com a **maior taxa de abstenção** ${scopeLabel} foi **${top.name}** (em **${top.mun}**), com **${top.rate.toFixed(2)}%** de abstenção (total de **${top.count.toLocaleString('pt-BR')}** faltantes).`;
+
+                if (sorted.length > 1) {
+                    response += `\n\n**Top 3 locais com maior abstenção:**`;
+                    for (let j = 0; j < Math.min(3, sorted.length); j++) {
+                        response += `\n${j+1}º. **${sorted[j].name}** (${sorted[j].mun}): **${sorted[j].rate.toFixed(2)}%** abstenção`;
+                    }
+                }
+                return response;
+            }
+
+            // 2. QUERY: Most populated section (highest turnout or aptos)
+            if (cleanQuery.includes('secao com mais') || cleanQuery.includes('secao teve mais eleitores') || cleanQuery.includes('maior secao')) {
+                const sorted = [...localScopeSecs].sort((a,b) => b.QT_COMPARECIMENTO - a.QT_COMPARECIMENTO);
+                const top = sorted[0];
+
+                return `📈 A **seção eleitoral com maior número de eleitores presentes** ${scopeLabel} foi a **Seção ${top.NR_SECAO}** (Zona **${top.NR_ZONA}**), sediada em **${top.NM_LOCAL_VOTACAO}** (${top.NM_MUNICIPIO}).
+                * **Eleitores Aptos:** ${top.QT_APTOS}
+                * **Comparecimento:** **${top.QT_COMPARECIMENTO}** eleitores presentes (${((top.QT_COMPARECIMENTO / top.QT_APTOS)*100).toFixed(1)}%)
+                * **Abstenção:** ${top.QT_ABSTENCOES} eleitores faltosos`;
+            }
+
+            // 3. QUERY: Count sections using specific Urna model
+            if (cleanQuery.includes('modelo') || cleanQuery.includes('urna') || cleanQuery.includes('quantas secoes usam')) {
+                // Find potential model matches, e.g. "2020", "2015"
+                const modelYear = query.match(/\b(2009|2010|2011|2013|2015|2020|20225?)\b/);
+                
+                if (modelYear) {
+                    const year = modelYear[1];
+                    const matchedSecs = localScopeSecs.filter(s => s.DS_MODELO_URNA.includes(year));
+                    return `⚙️ **Uso de Urnas Modelo ${year} ${scopeLabel}:**
+                    * Encontrei **${matchedSecs.length.toLocaleString('pt-BR')}** seções utilizando urnas do modelo **UE ${year}** (representando **${((matchedSecs.length / localScopeSecs.length)*100).toFixed(1)}%** do total local).`;
+                }
+
+                // General summary of models
+                const models = {};
+                localScopeSecs.forEach(s => {
+                    models[s.DS_MODELO_URNA] = (models[s.DS_MODELO_URNA] || 0) + 1;
+                });
+
+                let response = `📋 **Distribuição Geral de Urnas Eletrônicas ${scopeLabel}:**`;
+                Object.entries(models).sort((a,b) => b[1] - a[1]).forEach(([model, count]) => {
+                    response += `\n* **${model}:** ${count.toLocaleString('pt-BR')} seções (${((count / localScopeSecs.length)*100).toFixed(1)}%)`;
+                });
+                return response;
+            }
+
+            // 4. QUERY: Query specific school name
+            let schoolFound = null;
+            const ignoreWords = ['escola', 'colegio', 'local', 'votacao', 'qual', 'foi', 'a', 'abstencao', 'em', 'resumo'];
+            const queryWords = query.toLowerCase().split(/\s+/).filter(w => !ignoreWords.includes(w) && w.length > 2);
+
+            if (queryWords.length > 0) {
+                // Aggregate schools
+                const schoolsMap = {};
+                uniqueSections.forEach(s => {
+                    const key = s.NM_LOCAL_VOTACAO;
+                    if (!schoolsMap[key]) {
+                        schoolsMap[key] = {
+                            name: s.NM_LOCAL_VOTACAO,
+                            end: s.DS_LOCAL_VOTACAO_ENDERECO,
+                            mun: s.NM_MUNICIPIO,
+                            aptos: 0, comp: 0, abst: 0, secoes: 0
+                        };
+                    }
+                    schoolsMap[key].aptos += s.QT_APTOS;
+                    schoolsMap[key].comp += s.QT_COMPARECIMENTO;
+                    schoolsMap[key].abst += s.QT_ABSTENCOES;
+                    schoolsMap[key].secoes++;
+                });
+
+                const allSchools = Object.values(schoolsMap);
+
+                for (let sc of allSchools) {
+                    const cleanName = sc.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                    let match = true;
+                    for (let word of queryWords) {
+                        const cleanWord = word.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                        if (!cleanName.includes(cleanWord)) {
+                            match = false;
+                            break;
+                        }
+                    }
+                    if (match) {
+                        schoolFound = sc;
+                        break;
+                    }
+                }
+            }
+
+            if (schoolFound) {
+                const pctAbst = ((schoolFound.abst / schoolFound.aptos) * 100).toFixed(2);
+                const pctPres = ((schoolFound.comp / schoolFound.aptos) * 100).toFixed(2);
+
+                return `🏫 **Estatísticas do Local de Votação:**
+                * **Nome:** **${schoolFound.name}**
+                * **Endereço:** ${schoolFound.end}
+                * **Cidade:** ${schoolFound.mun}
+                * **Total de Seções (Urnas):** ${schoolFound.secoes}
+                * **Eleitores Aptos:** ${schoolFound.aptos.toLocaleString('pt-BR')}
+                * **Comparecimento:** **${schoolFound.comp.toLocaleString('pt-BR')}** presentes (${pctPres}%)
+                * **Abstenção:** **${schoolFound.abst.toLocaleString('pt-BR')}** ausentes (**${pctAbst}%**)`;
+            }
+
+            // Fallback suggestions
+            return `🤔 Desculpe, não consegui processar a pergunta exata.
+            
+            **Experimente me perguntar:**
+            * *"Qual local de votação teve a maior abstenção?"*
+            * *"Qual seção teve mais eleitores presentes?"*
+            * *"Resumo do local [Nome da Escola]"*
+            * *"Quantas seções usam a urna 2020?"*`;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1827 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TSE Eleições 2024 - Dashboard Analítico Premium</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        outfit: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        glass: {
+                            50: 'rgba(255, 255, 255, 0.02)',
+                            100: 'rgba(255, 255, 255, 0.05)',
+                            200: 'rgba(255, 255, 255, 0.08)',
+                            300: 'rgba(255, 255, 255, 0.12)',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- CSS Customizado (Aesthetics Premium & Glassmorphism) -->
+    <style>
+        :root {
+            --primary-glow: radial-gradient(rgba(16, 185, 129, 0.12), rgba(59, 130, 246, 0.03));
+            --glow-color-emerald: rgba(16, 185, 129, 0.4);
+            --glow-color-blue: rgba(59, 130, 246, 0.4);
+        }
+
+        body {
+            background-color: #030712;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(4, 21, 45, 0.8) 0%, rgba(3, 7, 18, 0.95) 90%),
+                radial-gradient(circle at 80% 80%, rgba(16, 185, 129, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 50%);
+            background-attachment: fixed;
+            color: #f3f4f6;
+            overflow-x: hidden;
+        }
+
+        /* Efeito de Vidro Refinado */
+        .glass-card {
+            background: rgba(17, 24, 39, 0.55);
+            backdrop-filter: blur(16px) saturate(120%);
+            -webkit-backdrop-filter: blur(16px) saturate(120%);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .glass-card:hover {
+            border-color: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 16px 48px 0 rgba(0, 0, 0, 0.5), 0 0 15px rgba(59, 130, 246, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .glass-card-interactive {
+            cursor: pointer;
+        }
+
+        /* Estilo da barra de rolagem */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(3, 7, 18, 0.8);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Efeito de neon pulsante */
+        @keyframes pulse-neon {
+            0%, 100% {
+                border-color: rgba(16, 185, 129, 0.2);
+                box-shadow: 0 0 5px rgba(16, 185, 129, 0.1);
+            }
+            50% {
+                border-color: rgba(16, 185, 129, 0.5);
+                box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+            }
+        }
+        .neon-border-pulse {
+            animation: pulse-neon 3s infinite;
+        }
+
+        /* Custom Input */
+        .glass-input {
+            background: rgba(3, 7, 18, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            color: #f3f4f6;
+            transition: all 0.3s ease;
+        }
+        .glass-input:focus {
+            outline: none;
+            border-color: #10b981;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
+            background: rgba(3, 7, 18, 0.6);
+        }
+
+        /* Custom Select styling */
+        select.glass-input option {
+            background-color: #0d1117;
+            color: #f3f4f6;
+        }
+
+        /* Chat bubbles */
+        .chat-user {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(37, 99, 235, 0.15) 100%);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 18px 18px 2px 18px;
+        }
+        .chat-assistant {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 18px 18px 18px 2px;
+        }
+
+        /* Chips */
+        .chip {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.2s ease;
+        }
+        .chip:hover {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: rgba(16, 185, 129, 0.3);
+            transform: translateY(-1px);
+        }
+    </style>
+    
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- PapaParse (Alta Performance CSV) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="h-full flex flex-col font-sans antialiased text-gray-200">
+
+    <!-- Top Glow Header -->
+    <header class="border-b border-white/5 bg-gray-950/40 backdrop-blur-md sticky top-0 z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="p-2.5 bg-gradient-to-tr from-emerald-500 to-blue-500 rounded-xl shadow-lg shadow-emerald-500/10 flex items-center justify-center">
+                    <i data-lucide="vote" class="w-6 h-6 text-white"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold font-outfit tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-teal-300 to-blue-400">
+                        TSE ELEIÇÕES 2024
+                    </h1>
+                    <p class="text-[10px] uppercase tracking-widest text-emerald-400 font-semibold">Dashboard Analítico Premium</p>
+                </div>
+            </div>
+            
+            <!-- File Info / Status Indicator -->
+            <div class="flex items-center space-x-4">
+                <div id="fileStatusBadge" class="hidden md:flex items-center space-x-2 bg-emerald-500/10 border border-emerald-500/20 px-3.5 py-1.5 rounded-full text-xs text-emerald-400 font-medium transition-all duration-300">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                    <span class="text-gray-400 mr-0.5">Ativo:</span>
+                    <span id="loadedFileName">Nenhum arquivo</span>
+                </div>
+                <input type="file" id="csvFileInput" class="hidden" accept=".csv">
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+        
+        <!-- INITIAL STATE: Dropzone / State Selector -->
+        <section id="uploadZoneContainer" class="transition-all duration-500">
+            <!-- 1. AUTO SELECTOR CARD -->
+            <div id="autoSelectorCard" class="glass-card neon-border-pulse rounded-3xl p-8 sm:p-12 text-center flex flex-col items-center justify-center space-y-8 relative overflow-hidden group">
+                <div class="absolute -top-40 -left-40 w-80 h-80 bg-emerald-500/5 rounded-full blur-3xl group-hover:bg-emerald-500/10 transition-all duration-500"></div>
+                <div class="absolute -bottom-40 -right-40 w-80 h-80 bg-teal-500/5 rounded-full blur-3xl group-hover:bg-teal-500/10 transition-all duration-500"></div>
+                
+                <div class="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center shadow-inner group-hover:scale-105 group-hover:border-emerald-500/30 transition-all duration-300">
+                    <i data-lucide="database" class="w-8 h-8 text-emerald-400"></i>
+                </div>
+                
+                <div class="max-w-md space-y-2">
+                    <h3 class="text-2xl font-bold font-outfit text-white">Carregamento Inteligente de Votações</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed">
+                        Escolha um Estado (UF) para carregar os dados de partidos/legendas diretamente do diretório local.
+                    </p>
+                </div>
+
+                <!-- SELECT & LOAD BUTTON -->
+                <div class="w-full max-w-sm flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                    <select id="stateSelector" class="flex-1 glass-input px-4 py-3 text-sm focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-gray-950 border-white/10 text-white rounded-xl">
+                        <option value="BRASIL">Brasil (Consolidado)</option>
+                        <option value="AC">Acre (AC)</option>
+                        <option value="AL">Alagoas (AL)</option>
+                        <option value="AM">Amazonas (AM)</option>
+                        <option value="AP">Amapá (AP)</option>
+                        <option value="BA">Bahia (BA)</option>
+                        <option value="CE">Ceará (CE)</option>
+                        <option value="ES">Espírito Santo (ES)</option>
+                        <option value="GO">Goiás (GO)</option>
+                        <option value="MA">Maranhão (MA)</option>
+                        <option value="MG">Minas Gerais (MG)</option>
+                        <option value="MS">Mato Grosso do Sul (MS)</option>
+                        <option value="MT">Mato Grosso (MT)</option>
+                        <option value="PA">Pará (PA)</option>
+                        <option value="PB">Paraíba (PB)</option>
+                        <option value="PE">Pernambuco (PE)</option>
+                        <option value="PI">Piauí (PI)</option>
+                        <option value="PR">Paraná (PR)</option>
+                        <option value="RJ">Rio de Janeiro (RJ)</option>
+                        <option value="RN">Rio Grande do Norte (RN)</option>
+                        <option value="RO">Rondônia (RO)</option>
+                        <option value="RR">Roraima (RR)</option>
+                        <option value="RS">Rio Grande do Sul (RS)</option>
+                        <option value="SC">Santa Catarina (SC)</option>
+                        <option value="SE">Sergipe (SE)</option>
+                        <option value="SP" selected>São Paulo (SP)</option>
+                        <option value="TO">Tocantins (TO)</option>
+                    </select>
+                    <button onclick="loadStateDataAuto()" class="bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white font-semibold text-sm px-6 py-3 rounded-xl shadow-lg active:scale-95 transition-all duration-200 flex items-center justify-center gap-2">
+                        <i data-lucide="play" class="w-4 h-4"></i>
+                        <span>Carregar</span>
+                    </button>
+                </div>
+
+                <!-- OR MANUAL UPLOAD TRIGGERS -->
+                <div class="text-xs text-gray-500 pt-2 border-t border-white/5 w-full max-w-lg flex flex-col items-center gap-2">
+                    <span class="flex items-center space-x-1.5"><i data-lucide="shield-check" class="w-4 h-4 text-emerald-500"></i> <span>Acesso ultra rápido e offline</span></span>
+                    <button onclick="showManualUpload()" class="text-emerald-400 hover:text-emerald-300 font-semibold underline mt-2">Ou carregar um arquivo .csv manualmente</button>
+                </div>
+            </div>
+
+            <!-- 2. CORS ERROR / FALLBACK SCREEN (Initially Hidden) -->
+            <div id="corsErrorCard" class="hidden glass-card rounded-3xl p-8 sm:p-12 text-center flex flex-col items-center justify-center space-y-6 relative overflow-hidden group">
+                <div class="absolute -top-40 -left-40 w-80 h-80 bg-red-500/5 rounded-full blur-3xl"></div>
+                <div class="absolute -bottom-40 -right-40 w-80 h-80 bg-emerald-500/5 rounded-full blur-3xl"></div>
+                
+                <div class="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+                    <i data-lucide="alert-triangle" class="w-8 h-8"></i>
+                </div>
+                
+                <div class="max-w-xl space-y-3">
+                    <h3 class="text-2xl font-bold font-outfit text-white">Carregamento Manual Requerido</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed">
+                        O navegador bloqueou o carregamento automático por segurança do protocolo <code class="bg-white/5 px-1 rounded text-red-400">file://</code> (CORS).
+                    </p>
+                    <div class="bg-emerald-500/10 border border-emerald-500/25 rounded-2xl p-4 text-left max-w-md mx-auto space-y-2">
+                        <p class="text-xs text-emerald-300 font-semibold">Como carregar:</p>
+                        <ol class="text-xs text-gray-300 list-decimal list-inside space-y-1.5">
+                            <li>Abra o diretório <code class="bg-white/5 px-1 rounded font-mono">votacao_partido_munzona_2024</code>.</li>
+                            <li>Arraste o arquivo <strong id="fallbackFileName" class="text-white font-mono">votacao_partido_munzona_2024_[UF].csv</strong> e solte-o no painel tracejado abaixo.</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- Dropzone fallback -->
+                <div id="dropzone" class="w-full max-w-lg border-2 border-dashed border-white/10 hover:border-emerald-500/30 bg-white/[0.01] hover:bg-white/[0.03] rounded-2xl p-8 flex flex-col items-center justify-center space-y-3 transition-all cursor-pointer">
+                    <i data-lucide="upload-cloud" class="w-8 h-8 text-gray-500"></i>
+                    <p class="text-xs text-gray-400">Arraste e solte o arquivo CSV aqui ou clique para selecionar</p>
+                </div>
+                
+                <button onclick="hideManualUpload()" class="text-xs text-gray-500 hover:text-gray-300 underline font-medium">Voltar para seleção automática</button>
+            </div>
+            
+            <!-- Loading Modal Overlay -->
+            <div id="loadingOverlay" class="hidden fixed inset-0 bg-gray-950/80 backdrop-blur-md z-[100] flex items-center justify-center transition-all duration-300">
+                <div class="bg-gray-900/90 border border-white/10 p-8 rounded-2xl max-w-sm w-full text-center space-y-6 shadow-2xl">
+                    <div class="relative w-16 h-16 mx-auto">
+                        <div class="absolute inset-0 rounded-full border-4 border-emerald-500/20"></div>
+                        <div class="absolute inset-0 rounded-full border-4 border-emerald-500 border-t-transparent animate-spin"></div>
+                    </div>
+                    <div class="space-y-2">
+                        <h4 id="loadingOverlayTitle" class="text-lg font-bold font-outfit text-white">Analisando Partidos...</h4>
+                        <p id="loadingOverlaySub" class="text-xs text-gray-400">Processando e consolidando votos offline.</p>
+                    </div>
+                    <div class="w-full bg-white/5 rounded-full h-2 overflow-hidden border border-white/5">
+                        <div id="loadingProgressBar" class="bg-gradient-to-r from-emerald-500 to-teal-400 h-full w-0 transition-all duration-300"></div>
+                    </div>
+                    <div class="text-[10px] text-gray-500 flex justify-between px-1">
+                        <span id="loadingProgressPercent">0%</span>
+                        <span id="loadingProgressRecords">0 registros</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ACTIVE STATE: Dashboard statistics (Hidden initially) -->
+        <section id="dashboardContent" class="hidden space-y-8 transition-all duration-500 opacity-0">
+            
+            <!-- Header Filter & Quick Switch -->
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white/[0.02] border border-white/5 p-5 rounded-2xl">
+                <div class="space-y-1">
+                    <h2 class="text-lg font-bold font-outfit text-white flex items-center gap-2">
+                        <i data-lucide="layout-dashboard" class="w-5 h-5 text-emerald-400"></i>
+                        Estatísticas da Eleição Municipal <span id="stateBadge" class="bg-emerald-500/25 border border-emerald-500/40 text-emerald-300 px-2.5 py-0.5 rounded text-xs">SP</span>
+                    </h2>
+                    <p class="text-xs text-gray-400">Dados oficiais agregados com base no local zona e município.</p>
+                </div>
+                <!-- Municipality Select -->
+                <div class="flex items-center space-x-3">
+                    <label for="municipalityFilter" class="text-xs font-semibold text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
+                        <i data-lucide="map-pin" class="w-4 h-4 text-emerald-400"></i>
+                        Município:
+                    </label>
+                    <select id="municipalityFilter" class="glass-input px-4 py-2.5 text-sm font-medium pr-10 min-w-[220px]">
+                        <option value="ALL">Todos os Municípios</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- KPI Cards Grid -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- Votos Totais -->
+                <div class="glass-card rounded-2xl p-5 flex items-center space-x-4">
+                    <div class="p-3.5 bg-blue-500/10 rounded-xl border border-blue-500/20 text-blue-400">
+                        <i data-lucide="ticket" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <p class="text-[11px] font-semibold text-gray-400 uppercase tracking-widest">Votos Nominais Válidos</p>
+                        <h4 id="kpiTotalVotes" class="text-2xl font-black font-outfit tracking-tight text-white mt-1">0</h4>
+                        <p id="kpiTotalVotesSub" class="text-[10px] text-gray-500 mt-0.5">100% apurados</p>
+                    </div>
+                </div>
+                <!-- Total de Candidatos -->
+                <div class="glass-card rounded-2xl p-5 flex items-center space-x-4">
+                    <div class="p-3.5 bg-emerald-500/10 rounded-xl border border-emerald-500/20 text-emerald-400">
+                        <i data-lucide="users" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <p class="text-[11px] font-semibold text-gray-400 uppercase tracking-widest">Candidatos Totais</p>
+                        <h4 id="kpiTotalCandidates" class="text-2xl font-black font-outfit tracking-tight text-white mt-1">0</h4>
+                        <p id="kpiTotalCandidatesSub" class="text-[10px] text-gray-500 mt-0.5">Disputando cargos</p>
+                    </div>
+                </div>
+                <!-- Partidos Representados -->
+                <div class="glass-card rounded-2xl p-5 flex items-center space-x-4">
+                    <div class="p-3.5 bg-amber-500/10 rounded-xl border border-amber-500/20 text-amber-400">
+                        <i data-lucide="flag" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <p class="text-[11px] font-semibold text-gray-400 uppercase tracking-widest">Partidos Registrados</p>
+                        <h4 id="kpiTotalParties" class="text-2xl font-black font-outfit tracking-tight text-white mt-1">0</h4>
+                        <p id="kpiTotalPartiesSub" class="text-[10px] text-gray-500 mt-0.5">Legendas ativas</p>
+                    </div>
+                </div>
+                <!-- Cidades Cobertas -->
+                <div class="glass-card rounded-2xl p-5 flex items-center space-x-4">
+                    <div class="p-3.5 bg-teal-500/10 rounded-xl border border-teal-500/20 text-teal-400">
+                        <i data-lucide="building-2" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <p class="text-[11px] font-semibold text-gray-400 uppercase tracking-widest">Cidades Cobertas</p>
+                        <h4 id="kpiTotalCities" class="text-2xl font-black font-outfit tracking-tight text-white mt-1">0</h4>
+                        <p id="kpiTotalCitiesSub" class="text-[10px] text-gray-500 mt-0.5">Zonas integradas</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visualization Charts Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Cargo Distribution (Pie Chart) -->
+                <div class="glass-card rounded-2xl p-6 flex flex-col justify-between min-h-[380px]">
+                    <div class="flex items-center justify-between pb-4 border-b border-white/5">
+                        <h4 class="text-sm font-bold font-outfit text-white flex items-center gap-2">
+                            <i data-lucide="pie-chart" class="w-4 h-4 text-emerald-400"></i>
+                            Distribuição de Votos por Cargo
+                        </h4>
+                    </div>
+                    <div class="flex-1 flex items-center justify-center p-4 relative">
+                        <canvas id="cargoVotesChart" class="max-h-[220px] max-w-[220px]"></canvas>
+                    </div>
+                </div>
+
+                <!-- Partidos mais Votados (Bar Chart) -->
+                <div class="glass-card rounded-2xl p-6 flex flex-col justify-between lg:col-span-2 min-h-[380px]">
+                    <div class="flex items-center justify-between pb-4 border-b border-white/5">
+                        <h4 class="text-sm font-bold font-outfit text-white flex items-center gap-2">
+                            <i data-lucide="bar-chart-3" class="w-4 h-4 text-emerald-400"></i>
+                            Top 10 Partidos por Votos Válidos
+                        </h4>
+                    </div>
+                    <div class="flex-1 p-4 flex items-center justify-center">
+                        <canvas id="partyVotesChart" class="max-h-[240px] w-full"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q&A NLP Engine Section (Chat-like Assistant) -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- NLP Interaction Chat panel (Spans 2 columns) -->
+                <div class="glass-card rounded-2xl p-6 lg:col-span-2 flex flex-col h-[520px]">
+                    <div class="flex items-center justify-between pb-4 border-b border-white/5">
+                        <div class="flex items-center space-x-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center">
+                                <i data-lucide="sparkles" class="w-4.5 h-4.5 animate-pulse"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-bold font-outfit text-white">Assistente Virtual das Eleições 2024</h4>
+                                <p class="text-[10px] text-emerald-400">Motor Inteligente de Perguntas & Respostas Local</p>
+                            </div>
+                        </div>
+                        <button onclick="clearChat()" class="text-xs text-gray-500 hover:text-gray-300 flex items-center gap-1 transition-colors">
+                            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> Limpar Histórico
+                        </button>
+                    </div>
+                    
+                    <!-- Chat Message Area -->
+                    <div id="chatMessageArea" class="flex-1 overflow-y-auto py-4 space-y-4 pr-1 text-sm">
+                        <!-- Default Assistant welcome message -->
+                        <div class="chat-assistant p-4 text-gray-300 max-w-[85%] space-y-3">
+                            <p>👋 Olá! Eu sou seu **Assistente Virtual das Eleições 2024**.</p>
+                            <p>Agora que carregamos os dados do TSE, você pode fazer qualquer pergunta em linguagem natural para analisar as estatísticas de forma profunda!</p>
+                            <p>Você pode testar clicando em uma das **sugestões rápidas** abaixo ou digitando na caixa de texto.</p>
+                        </div>
+                    </div>
+
+                    <!-- Suggestion Chips -->
+                    <div class="py-2.5 border-t border-white/5 flex flex-wrap gap-1.5 overflow-x-auto max-h-[85px] content-start">
+                        <button onclick="askPreset('Quem foi o prefeito mais votado?')" class="chip px-3 py-1.5 rounded-full text-xs text-teal-300 font-medium">🏆 Prefeito mais votado</button>
+                        <button onclick="askPreset('Quem foi o vereador mais votado?')" class="chip px-3 py-1.5 rounded-full text-xs text-teal-300 font-medium">🏅 Vereador mais votado</button>
+                        <button onclick="askPreset('Qual partido elegeu mais vereadores?')" class="chip px-3 py-1.5 rounded-full text-xs text-teal-300 font-medium">📈 Partido com mais Vereadores</button>
+                        <button onclick="askPreset('Quais candidatos foram eleitos?')" class="chip px-3 py-1.5 rounded-full text-xs text-teal-300 font-medium">🗳️ Prefeitos Eleitos</button>
+                        <button onclick="askPreset('Quantos votos teve o partido com mais candidatos?')" class="chip px-3 py-1.5 rounded-full text-xs text-teal-300 font-medium">📋 Resumo por Partidos</button>
+                    </div>
+
+                    <!-- Input Bar -->
+                    <div class="flex items-center space-x-2 pt-3 border-t border-white/5">
+                        <input type="text" id="chatInput" placeholder="Ex: Quem foi o prefeito mais votado em Xapuri?" class="glass-input flex-1 px-4 py-3 text-sm focus:outline-none" onkeypress="handleChatKeyPress(event)">
+                        <button onclick="submitChat()" class="p-3 bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white rounded-xl shadow-lg active:scale-95 transition-all flex items-center justify-center">
+                            <i data-lucide="send" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Fast Quick-Facts Panel (1 column) -->
+                <div class="glass-card rounded-2xl p-6 flex flex-col justify-between h-[520px]">
+                    <div class="pb-4 border-b border-white/5">
+                        <h4 class="text-sm font-bold font-outfit text-white flex items-center gap-2">
+                            <i data-lucide="award" class="w-4 h-4 text-emerald-400"></i>
+                            Estatísticas Rápidas do Estado
+                        </h4>
+                    </div>
+                    <div class="flex-1 py-4 space-y-4 overflow-y-auto">
+                        <!-- Stat Item 1 -->
+                        <div class="bg-white/[0.02] border border-white/5 p-3.5 rounded-xl space-y-2">
+                            <div class="flex justify-between items-center text-xs">
+                                <span class="text-gray-400 flex items-center gap-1"><i data-lucide="users" class="w-3.5 h-3.5 text-blue-400"></i> Candidatos Prefeito</span>
+                                <span id="quickStatPrefeitos" class="font-bold text-white">0</span>
+                            </div>
+                            <div class="w-full bg-white/5 h-1.5 rounded-full overflow-hidden">
+                                <div id="quickStatPrefeitosBar" class="bg-blue-400 h-full" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <!-- Stat Item 2 -->
+                        <div class="bg-white/[0.02] border border-white/5 p-3.5 rounded-xl space-y-2">
+                            <div class="flex justify-between items-center text-xs">
+                                <span class="text-gray-400 flex items-center gap-1"><i data-lucide="users" class="w-3.5 h-3.5 text-emerald-400"></i> Candidatos Vereador</span>
+                                <span id="quickStatVereadores" class="font-bold text-white">0</span>
+                            </div>
+                            <div class="w-full bg-white/5 h-1.5 rounded-full overflow-hidden">
+                                <div id="quickStatVereadoresBar" class="bg-emerald-400 h-full" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <!-- Top Party representation -->
+                        <div class="bg-white/[0.02] border border-white/5 p-4 rounded-xl space-y-3">
+                            <h5 class="text-xs font-bold text-gray-300 uppercase tracking-widest">Partidos mais Frequentes</h5>
+                            <div id="quickStatsTopParties" class="space-y-2 text-xs">
+                                <!-- Populated dynamically -->
+                                <p class="text-gray-500 italic">Carregando dados...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pt-4 border-t border-white/5 text-[10px] text-gray-500 flex justify-between">
+                        <span>Fonte: Dados Abertos do TSE</span>
+                        <span>Atualização 2024</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Candidate Table -->
+            <div class="glass-card rounded-2xl p-6 space-y-6">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/5 pb-4">
+                    <div class="space-y-1">
+                        <h4 class="text-sm font-bold font-outfit text-white flex items-center gap-2">
+                            <i data-lucide="list-filter" class="w-4 h-4 text-emerald-400"></i>
+                            Tabela Completa de Candidatos e Votação
+                        </h4>
+                        <p class="text-xs text-gray-400">Navegue, ordene e filtre a lista detalhada de candidatos participantes.</p>
+                    </div>
+                    <!-- Table Actions & Search -->
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                        <div class="relative">
+                            <i data-lucide="search" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"></i>
+                            <input type="text" id="tableSearch" placeholder="Buscar candidato..." class="glass-input pl-10 pr-4 py-2.5 text-xs min-w-[200px]" oninput="handleTableSearch()">
+                        </div>
+                        <select id="tableCargoFilter" class="glass-input px-3 py-2.5 text-xs" onchange="handleTableFilters()">
+                            <option value="ALL">Todos os Cargos</option>
+                            <option value="Prefeito">Prefeito</option>
+                            <option value="Vereador">Vereador</option>
+                        </select>
+                        <select id="tableSituationFilter" class="glass-input px-3 py-2.5 text-xs" onchange="handleTableFilters()">
+                            <option value="ALL">Qualquer Situação</option>
+                            <option value="ELEITO">Eleitos</option>
+                            <option value="SUPLENTE">Suplentes</option>
+                            <option value="NÃO ELEITO">Não Eleitos</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Table Component -->
+                <div class="overflow-x-auto border border-white/5 rounded-xl bg-gray-950/20">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="border-b border-white/10 bg-white/[0.02] text-gray-400 font-semibold">
+                                <th class="px-5 py-3.5 cursor-pointer hover:text-white transition-colors" onclick="sortTable('NM_CANDIDATO')">
+                                    Candidato <span id="sort_NM_CANDIDATO" class="ml-1 text-[10px]"></span>
+                                </th>
+                                <th class="px-5 py-3.5 cursor-pointer hover:text-white transition-colors" onclick="sortTable('NM_MUNICIPIO')">
+                                    Município <span id="sort_NM_MUNICIPIO" class="ml-1 text-[10px]"></span>
+                                </th>
+                                <th class="px-5 py-3.5 cursor-pointer hover:text-white transition-colors" onclick="sortTable('SG_PARTIDO')">
+                                    Partido <span id="sort_SG_PARTIDO" class="ml-1 text-[10px]"></span>
+                                </th>
+                                <th class="px-5 py-3.5 cursor-pointer hover:text-white transition-colors" onclick="sortTable('DS_CARGO')">
+                                    Cargo <span id="sort_DS_CARGO" class="ml-1 text-[10px]"></span>
+                                </th>
+                                <th class="px-5 py-3.5 cursor-pointer hover:text-white transition-colors text-right" onclick="sortTable('QT_VOTOS_NOMINAIS')">
+                                    Votos Válidos <span id="sort_QT_VOTOS_NOMINAIS" class="ml-1 text-[10px]"></span>
+                                </th>
+                                <th class="px-5 py-3.5 cursor-pointer hover:text-white transition-colors text-center" onclick="sortTable('DS_SIT_TOT_TURNO')">
+                                    Situação <span id="sort_DS_SIT_TOT_TURNO" class="ml-1 text-[10px]"></span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="candidateTableBody" class="divide-y divide-white/5 text-gray-300">
+                            <!-- Populated dynamically -->
+                            <tr>
+                                <td colspan="6" class="text-center py-8 text-gray-500 italic">Carregue um arquivo CSV para começar.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Table Pagination -->
+                <div class="flex items-center justify-between pt-2">
+                    <span id="tablePaginationInfo" class="text-xs text-gray-500">Mostrando 0 de 0 candidatos</span>
+                    <div class="flex items-center space-x-2">
+                        <button id="btnPrevPage" onclick="prevPage()" class="p-2 border border-white/5 bg-white/5 hover:bg-white/10 rounded-lg text-gray-400 hover:text-white disabled:opacity-30 disabled:pointer-events-none transition-colors">
+                            <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                        </button>
+                        <span id="tableCurrentPage" class="text-xs font-semibold px-3 py-1 bg-white/5 rounded-lg border border-white/5 text-white">1</span>
+                        <button id="btnNextPage" onclick="nextPage()" class="p-2 border border-white/5 bg-white/5 hover:bg-white/10 rounded-lg text-gray-400 hover:text-white disabled:opacity-30 disabled:pointer-events-none transition-colors">
+                            <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer class="border-t border-white/5 bg-gray-950/60 py-6 text-center text-xs text-gray-500">
+        <p>© 2026 Dashboard Premium TSE - Eleições Municipais 2024. Desenvolvido localmente de forma offline para máxima privacidade.</p>
+    </footer>
+
+    <!-- LOGIC FOR DASHBOARD & DATA PROCESSING -->
+    <script>
+        // Configuração do Bucket Remoto (Substitua pela sua URL pública do R2 após criá-lo)
+        const REMOTE_BUCKET_URL = 'https://SEU_BUCKET_PUBLICO.r2.dev/';
+
+        function getDataSourceUrl(directory, filename) {
+            const host = window.location.hostname;
+            if (host === 'localhost' || host === '127.0.0.1' || window.location.protocol === 'file:') {
+                return `../${directory}/${filename}`;
+            }
+            return `${REMOTE_BUCKET_URL}${directory}/${filename}`;
+        }
+
+        // Global variables for elections data
+        let electionRecords = [];
+        let filteredRecords = [];
+        let uniqueMunicipalities = [];
+        let uniqueParties = [];
+        let isPartyFile = false;
+        
+        // Pagination state
+        let currentPage = 1;
+        const recordsPerPage = 10;
+        let activeSortColumn = 'QT_VOTOS_NOMINAIS';
+        let sortAscending = false;
+
+        // Active filters
+        let activeMunicipality = 'ALL';
+        let activeTableSearch = '';
+        let activeTableCargo = 'ALL';
+        let activeTableSituation = 'ALL';
+
+        // Chart instances
+        let cargoChartInstance = null;
+        let partyChartInstance = null;
+
+        // Initialize collapsible console and catch logs
+        function toggleConsole() {
+            const consoleEl = document.getElementById('devConsole');
+            const chevron = document.getElementById('consoleChevron');
+            if (consoleEl.style.maxHeight === '300px') {
+                consoleEl.style.maxHeight = '40px';
+                if (chevron) chevron.style.transform = 'rotate(0deg)';
+            } else {
+                consoleEl.style.maxHeight = '300px';
+                if (chevron) chevron.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        // Intercept global errors to show in user DevConsole
+        window.onerror = function(message, source, lineno, colno, error) {
+            logToDevConsole(`❌ ERRO: ${message} (Linha ${lineno}:${colno})`, 'error');
+            if (error && error.stack) {
+                logToDevConsole(error.stack.split('\n').slice(0, 3).join('\n'), 'stack');
+            }
+            return false;
+        };
+
+        window.onunhandledrejection = function(event) {
+            logToDevConsole(`❌ PROMESSA REJEITADA: ${event.reason}`, 'error');
+        };
+
+        function logToDevConsole(text, type = 'info') {
+            const area = document.getElementById('consoleLogArea');
+            if (!area) return;
+            const line = document.createElement('div');
+            if (type === 'error') {
+                line.className = 'text-red-400 font-bold';
+            } else if (type === 'stack') {
+                line.className = 'text-gray-500 pl-4 whitespace-pre-wrap';
+            } else {
+                line.className = 'text-emerald-400';
+            }
+            line.innerText = text;
+            area.appendChild(line);
+            area.scrollTop = area.scrollHeight;
+            
+            // Expand console on error
+            if (type === 'error') {
+                const consoleEl = document.getElementById('devConsole');
+                if (consoleEl) {
+                    consoleEl.style.maxHeight = '300px';
+                    const chevron = document.getElementById('consoleChevron');
+                    if (chevron) chevron.style.transform = 'rotate(180deg)';
+                }
+            }
+        }
+
+        // Navigation & Load Helpers
+        function showManualUpload() {
+            document.getElementById('autoSelectorCard').classList.add('hidden');
+            document.getElementById('corsErrorCard').classList.remove('hidden');
+        }
+
+        function hideManualUpload() {
+            document.getElementById('corsErrorCard').classList.add('hidden');
+            document.getElementById('autoSelectorCard').classList.remove('hidden');
+        }
+
+        async function fetchWithProgress(url, onProgress) {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const contentLength = response.headers.get('content-length');
+            if (!contentLength) {
+                const buffer = await response.arrayBuffer();
+                const decoder = new TextDecoder('iso-8859-1');
+                return decoder.decode(buffer);
+            }
+
+            const total = parseInt(contentLength, 10);
+            let loaded = 0;
+            const reader = response.body.getReader();
+            const chunks = [];
+
+            while(true) {
+                const {done, value} = await reader.read();
+                if (done) break;
+                chunks.push(value);
+                loaded += value.byteLength;
+                if (onProgress) {
+                    onProgress(loaded, total);
+                }
+            }
+
+            const allChunks = new Uint8Array(loaded);
+            let position = 0;
+            for (const chunk of chunks) {
+                allChunks.set(chunk, position);
+                position += chunk.byteLength;
+            }
+
+            const decoder = new TextDecoder('iso-8859-1');
+            return decoder.decode(allChunks);
+        }
+
+        async function loadStateDataAuto() {
+            const state = document.getElementById('stateSelector').value;
+            const filename = `votacao_partido_munzona_2024_${state}.csv`;
+            const url = getDataSourceUrl('votacao_partido_munzona_2024', filename);
+
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            const progressBar = document.getElementById('loadingProgressBar');
+            const progressPercent = document.getElementById('loadingProgressPercent');
+            const progressRecords = document.getElementById('loadingProgressRecords');
+            
+            document.getElementById('loadingOverlayTitle').innerText = 'Buscando Dados...';
+            document.getElementById('loadingOverlaySub').innerText = `Carregando votação de partidos para ${state}...`;
+            loadingOverlay.classList.remove('hidden');
+            progressBar.style.width = '5%';
+            progressPercent.innerText = '5%';
+            progressRecords.innerText = 'Iniciando conexão...';
+
+            logToDevConsole(`→ Tentando carregar dados automaticamente para UF: ${state}...`);
+
+            try {
+                const text = await fetchWithProgress(url, (loaded, total) => {
+                    const pct = Math.round((loaded / total) * 60) + 5;
+                    progressBar.style.width = `${pct}%`;
+                    progressPercent.innerText = `${pct}%`;
+                    const loadedMB = (loaded / 1024 / 1024).toFixed(1);
+                    const totalMB = (total / 1024 / 1024).toFixed(1);
+                    progressRecords.innerText = `Baixados ${loadedMB}MB de ${totalMB}MB...`;
+                });
+
+                logToDevConsole(`✓ Download concluído. Iniciando análise sintática CSV...`);
+                progressBar.style.width = '70%';
+                progressPercent.innerText = '70%';
+                progressRecords.innerText = 'Analisando linhas do CSV...';
+
+                Papa.parse(text, {
+                    header: true,
+                    skipEmptyLines: true,
+                    delimiter: ';',
+                    transformHeader: function(header) {
+                        if (!header) return '';
+                        return header.replace(/["']/g, '').trim();
+                    },
+                    complete: function(results) {
+                        progressBar.style.width = '90%';
+                        progressPercent.innerText = '90%';
+                        progressRecords.innerText = 'Agrupando registros...';
+                        
+                        setTimeout(() => {
+                            processRawData(results.data, filename);
+                        }, 50);
+                    },
+                    error: function(err) {
+                        logToDevConsole("❌ Erro no PapaParse: " + err.message, "error");
+                        alert('Erro ao carregar o CSV: ' + err.message);
+                        loadingOverlay.classList.add('hidden');
+                    }
+                });
+            } catch (error) {
+                console.error(error);
+                logToDevConsole(`❌ Erro no carregamento automático (CORS ou Arquivo Ausente): ${error.message}`, 'error');
+                
+                loadingOverlay.classList.add('hidden');
+                document.getElementById('fallbackFileName').innerText = filename;
+                showManualUpload();
+            }
+        }
+
+        // Initialize icons on load
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                if (typeof lucide !== 'undefined') {
+                    lucide.createIcons();
+                } else {
+                    logToDevConsole("⚠️ Lucide Icons não carregou pelo CDN. Algumas imagens podem falhar.", "info");
+                }
+            } catch (e) {
+                console.error(e);
+            }
+            
+            try {
+                setupDragAndDrop();
+                logToDevConsole("✓ Arrastar e soltar configurado com sucesso.");
+            } catch (e) {
+                logToDevConsole("❌ Erro ao configurar Upload: " + e.message, "error");
+            }
+        });
+
+        // DRAG & DROP & UPLOAD SETUP
+        function setupDragAndDrop() {
+            const dropzone = document.getElementById('dropzone');
+            
+            // Drag and drop event listeners
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropzone.addEventListener(eventName, (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    dropzone.classList.add('border-emerald-400', 'bg-white/[0.04]');
+                }, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropzone.addEventListener(eventName, (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    dropzone.classList.remove('border-emerald-400', 'bg-white/[0.04]');
+                }, false);
+            });
+
+            dropzone.addEventListener('drop', (e) => {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                if (files.length > 0) {
+                    processCSVFile(files[0]);
+                }
+            }, false);
+
+            // Click input listener
+            document.getElementById('csvFileInput').addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    processCSVFile(e.target.files[0]);
+                }
+            });
+        }
+
+        // CSV PARSING ENGINE with ISO-8859-1 & PAPAPARSE
+        function processCSVFile(file) {
+            if (!file.name.endsWith('.csv')) {
+                alert('Por favor, envie apenas arquivos no formato CSV.');
+                return;
+            }
+
+            // Show loading modal overlay
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            const progressBar = document.getElementById('loadingProgressBar');
+            const progressPercent = document.getElementById('loadingProgressPercent');
+            const progressRecords = document.getElementById('loadingProgressRecords');
+            
+            loadingOverlay.classList.remove('hidden');
+            progressBar.style.width = '0%';
+            progressPercent.innerText = '0%';
+            progressRecords.innerText = '0 registros';
+
+            const reader = new FileReader();
+            
+            // Reading using correct Latin-1/ISO-8859-1 encoding to prevent character bugs
+            reader.readAsText(file, "ISO-8859-1");
+            
+            reader.onprogress = (event) => {
+                if (event.lengthComputable) {
+                    const percent = Math.round((event.loaded / event.total) * 40); // Reader up to 40%
+                    progressBar.style.width = `${percent}%`;
+                    progressPercent.innerText = `${percent}%`;
+                }
+            };
+
+            reader.onload = function(e) {
+                const text = e.target.result;
+                
+                progressBar.style.width = '50%';
+                progressPercent.innerText = '50%';
+                progressRecords.innerText = 'Lendo linhas...';
+
+                // Parsing CSV using optimized PapaParse config
+                Papa.parse(text, {
+                    header: true,
+                    skipEmptyLines: true,
+                    delimiter: ';',
+                    transformHeader: function(header) {
+                        if (!header) return '';
+                        return header.replace(/["']/g, '').trim();
+                    },
+                    complete: function(results) {
+                        progressBar.style.width = '90%';
+                        progressPercent.innerText = '90%';
+                        progressRecords.innerText = 'Analisando registros...';
+                        
+                        setTimeout(() => {
+                            processRawData(results.data, file.name);
+                        }, 50);
+                    },
+                    error: function(err) {
+                        console.error(err);
+                        alert('Erro ao processar o CSV: ' + err.message);
+                        loadingOverlay.classList.add('hidden');
+                    }
+                });
+            };
+        }
+
+        // DATA POST-PROCESSING
+        function processRawData(data, filename) {
+            try {
+                electionRecords = [];
+                const municipalitiesSet = new Set();
+                const partiesSet = new Set();
+                let state = 'TSE';
+
+                if (!data || data.length === 0) {
+                    logToDevConsole("⚠️ O arquivo CSV está vazio ou o formato do delimitador não é ponto e vírgula.", "error");
+                    alert("O arquivo CSV está vazio ou não pôde ser lido. Verifique se o separador é ponto e vírgula (;) e se contém dados válidos.");
+                    return;
+                }
+
+                // Extract State code from filename if matches format
+                const stateMatch = filename.match(/_2024_([A-Z]{2})\.csv/i);
+                if (stateMatch && stateMatch[1]) {
+                    state = stateMatch[1].toUpperCase();
+                }
+
+                // Diagnostic & key mapping to tolerate quotes, spaces or variations
+                const firstRow = data[0];
+                if (!firstRow) {
+                    logToDevConsole("⚠️ Não foi possível ler a primeira linha como cabeçalho.", "error");
+                    alert("Formato de arquivo inválido. Não há colunas identificáveis.");
+                    return;
+                }
+
+                const keyMap = {};
+                Object.keys(firstRow).forEach(k => {
+                    const normalized = k.replace(/["']/g, '').trim().toUpperCase();
+                    keyMap[normalized] = k;
+                });
+
+                logToDevConsole("✓ Colunas encontradas: " + Object.keys(firstRow).slice(0, 10).join(', ') + "...");
+
+                isPartyFile = !keyMap['NM_CANDIDATO'];
+                logToDevConsole("✓ Tipo de arquivo detectado: " + (isPartyFile ? "Votação por Partido (Legenda)" : "Votação por Candidato"));
+
+                // Find columns or use fallbacks
+                const colCandidato = keyMap['NM_CANDIDATO'] || 'NM_CANDIDATO';
+                const colUrna = keyMap['NM_URNA_CANDIDATO'] || 'NM_URNA_CANDIDATO';
+                const colMunicipio = keyMap['NM_MUNICIPIO'] || 'NM_MUNICIPIO';
+                const colPartido = keyMap['SG_PARTIDO'] || 'SG_PARTIDO';
+                const colCargo = keyMap['DS_CARGO'] || 'DS_CARGO';
+                const colVotosNominais = keyMap['QT_VOTOS_NOMINAIS'] || 'QT_VOTOS_NOMINAIS';
+                const colVotosValidos = keyMap['QT_VOTOS_NOMINAIS_VALIDOS'] || 'QT_VOTOS_NOMINAIS_VALIDOS';
+                const colVotosLegenda = keyMap['QT_VOTOS_LEGENDA_VALIDOS'] || 'QT_VOTOS_LEGENDA_VALIDOS';
+                const colSituacao = keyMap['DS_SIT_TOT_TURNO'] || 'DS_SIT_TOT_TURNO';
+                const colNumero = keyMap['NR_CANDIDATO'] || 'NR_CANDIDATO';
+
+                // Convert types and sanitize fields
+                for (let i = 0; i < data.length; i++) {
+                    const row = data[i];
+                    // Check if candidate name field exists
+                    const name = (row[colCandidato] || '').trim();
+                    
+                    // If no candidate name, look for party name in party files
+                    if (!name && !row[colPartido]) continue; // Skip incomplete lines
+
+                    const nominais = parseInt(row[colVotosNominais]) || 0;
+                    const validos = parseInt(row[colVotosValidos]) || 0;
+                    const legenda = parseInt(row[colVotosLegenda]) || 0;
+                    
+                    // Clean situation string
+                    let sit = (row[colSituacao] || 'N/D').trim().toUpperCase();
+                    
+                    const record = {
+                        NM_CANDIDATO: name || `Partido ${row[colPartido] || 'Legenda'}`,
+                        NM_URNA_CANDIDATO: (row[colUrna] || '').trim() || name || row[colPartido] || 'LEGENDA',
+                        NM_MUNICIPIO: (row[colMunicipio] || '').trim() || 'NÃO INFORMADO',
+                        SG_PARTIDO: (row[colPartido] || '').trim() || 'S/P',
+                        DS_CARGO: (row[colCargo] || 'PARTIDO/GERAL').trim(),
+                        QT_VOTOS_NOMINAIS: Math.max(nominais, validos) + legenda, // Mapeamento correto de votos (inclui legenda)
+                        DS_SIT_TOT_TURNO: sit,
+                        NR_CANDIDATO: row[colNumero] || ''
+                    };
+
+                    electionRecords.push(record);
+                    if (record.NM_MUNICIPIO) municipalitiesSet.add(record.NM_MUNICIPIO);
+                    if (record.SG_PARTIDO) partiesSet.add(record.SG_PARTIDO);
+                }
+
+                logToDevConsole(`✓ Importados ${electionRecords.length.toLocaleString('pt-BR')} registros com sucesso.`);
+
+                // Sorted lists
+                uniqueMunicipalities = Array.from(municipalitiesSet).sort();
+                uniqueParties = Array.from(partiesSet).sort();
+
+                // Populate Municipality filters
+                const mFilter = document.getElementById('municipalityFilter');
+                if (mFilter) {
+                    mFilter.innerHTML = '<option value="ALL">Todos os Municípios</option>';
+                    uniqueMunicipalities.forEach(mun => {
+                        const opt = document.createElement('option');
+                        opt.value = mun;
+                        opt.innerText = mun;
+                        mFilter.appendChild(opt);
+                    });
+                }
+
+                // Update DOM headers/states
+                const sBadge = document.getElementById('stateBadge');
+                if (sBadge) sBadge.innerText = state;
+                
+                const fName = document.getElementById('loadedFileName');
+                if (fName) fName.innerText = filename;
+                
+                const fStatus = document.getElementById('fileStatusBadge');
+                if (fStatus) fStatus.classList.remove('hidden');
+                
+                // Switch layout to active state
+                const uploadZone = document.getElementById('uploadZoneContainer');
+                if (uploadZone) uploadZone.classList.add('hidden');
+                
+                const loadOverlay = document.getElementById('loadingOverlay');
+                if (loadOverlay) loadOverlay.classList.add('hidden');
+
+                // Update DOM elements for file type
+                const labelTotalCandidates = document.getElementById('kpiTotalCandidates')?.previousElementSibling;
+                const subTotalCandidates = document.getElementById('kpiTotalCandidatesSub');
+                const tableCandidateHeader = document.querySelector('th[onclick="sortTable(\'NM_CANDIDATO\')"]');
+                
+                if (isPartyFile) {
+                    if (labelTotalCandidates) labelTotalCandidates.innerText = "REGISTROS DE LEGENDA";
+                    if (subTotalCandidates) subTotalCandidates.innerText = "Total de registros de partidos";
+                    if (tableCandidateHeader) tableCandidateHeader.innerHTML = `Partido / Legenda <span id="sort_NM_CANDIDATO" class="ml-1 text-[10px]"></span>`;
+                } else {
+                    if (labelTotalCandidates) labelTotalCandidates.innerText = "CANDIDATOS TOTAIS";
+                    if (subTotalCandidates) subTotalCandidates.innerText = "Disputando cargos";
+                    if (tableCandidateHeader) tableCandidateHeader.innerHTML = `Candidato <span id="sort_NM_CANDIDATO" class="ml-1 text-[10px]"></span>`;
+                }
+                
+                const contentPanel = document.getElementById('dashboardContent');
+                if (contentPanel) {
+                    contentPanel.classList.remove('hidden');
+                    setTimeout(() => {
+                        contentPanel.classList.add('opacity-100');
+                    }, 50);
+                }
+
+                // Re-bind change listeners
+                if (mFilter) {
+                    mFilter.onchange = (e) => {
+                        activeMunicipality = e.target.value;
+                        updateDashboardData();
+                    };
+                }
+
+                // Run calculations and redraw
+                updateDashboardData();
+                
+                // Add automated welcome speech in chat
+                addAssistantMessage(`📊 **Arquivo carregado com sucesso!**
+                * **Arquivo:** \`${filename}\`
+                * **Registros Processados:** \`${electionRecords.length.toLocaleString('pt-BR')}\` registros
+                * **Total de Municípios:** \`${uniqueMunicipalities.length}\`
+                * **Total de Partidos:** \`${uniqueParties.length}\`
+                
+                Como posso ajudar você a analisar esses dados hoje? Você pode me perguntar, por exemplo, sobre candidatos mais votados em uma cidade específica!`);
+            } catch (err) {
+                logToDevConsole("❌ Erro em processRawData: " + err.message, "error");
+                console.error(err);
+                alert("Erro catastrófico ao processar dados: " + err.message);
+                const loadOverlay = document.getElementById('loadingOverlay');
+                if (loadOverlay) loadOverlay.classList.add('hidden');
+            }
+        }
+
+        // STATS AGGREGATION & GRAPHICS ENGINE
+        function updateDashboardData() {
+            try {
+                // Apply top level municipality filter
+                if (activeMunicipality === 'ALL') {
+                    filteredRecords = electionRecords;
+                } else {
+                    filteredRecords = electionRecords.filter(r => r.NM_MUNICIPIO === activeMunicipality);
+                }
+
+                // Calculate KPIs
+                let totalVotes = 0;
+                const candidatesSet = new Set();
+                const partiesSet = new Set();
+                const citiesSet = new Set();
+
+                filteredRecords.forEach(r => {
+                    totalVotes += r.QT_VOTOS_NOMINAIS || 0;
+                    if (r.NM_CANDIDATO) candidatesSet.add(r.NM_CANDIDATO);
+                    if (r.SG_PARTIDO) partiesSet.add(r.SG_PARTIDO);
+                    if (r.NM_MUNICIPIO) citiesSet.add(r.NM_MUNICIPIO);
+                });
+
+                // Update UI KPIs
+                document.getElementById('kpiTotalVotes').innerText = totalVotes.toLocaleString('pt-BR');
+                document.getElementById('kpiTotalCandidates').innerText = candidatesSet.size.toLocaleString('pt-BR');
+                document.getElementById('kpiTotalParties').innerText = partiesSet.size;
+                document.getElementById('kpiTotalCities').innerText = citiesSet.size;
+
+                // Update quick-facts stats right sidebar
+                try {
+                    calculateSidebarQuickStats();
+                } catch (e) {
+                    logToDevConsole("⚠️ Erro nos stats rápidos laterais: " + e.message, "error");
+                }
+
+                // Build charts
+                try {
+                    renderCharts();
+                } catch (e) {
+                    logToDevConsole("⚠️ Erro na renderização dos gráficos: " + e.message, "error");
+                }
+
+                // Reset table pagination and reload candidate list
+                try {
+                    currentPage = 1;
+                    renderCandidateTable();
+                } catch (e) {
+                    logToDevConsole("⚠️ Erro ao recarregar a tabela: " + e.message, "error");
+                }
+            } catch (err) {
+                logToDevConsole("❌ Erro em updateDashboardData: " + err.message, "error");
+                console.error(err);
+                alert("Erro ao atualizar o painel: " + err.message);
+            }
+        }
+
+        // RIGHT SIDEBAR CALCULATIONS
+        function calculateSidebarQuickStats() {
+            // Prefeitos vs Vereadores count
+            const prefeitosCount = filteredRecords.filter(r => r.DS_CARGO === 'Prefeito').length;
+            const vereadoresCount = filteredRecords.filter(r => r.DS_CARGO === 'Vereador').length;
+            const total = prefeitosCount + vereadoresCount || 1;
+
+            document.getElementById('quickStatPrefeitos').innerText = prefeitosCount.toLocaleString('pt-BR');
+            document.getElementById('quickStatPrefeitosBar').style.width = `${(prefeitosCount/total)*100}%`;
+
+            document.getElementById('quickStatVereadores').innerText = vereadoresCount.toLocaleString('pt-BR');
+            document.getElementById('quickStatVereadoresBar').style.width = `${(vereadoresCount/total)*100}%`;
+
+            // Top Parties by Candidate representation
+            const partyCountMap = {};
+            filteredRecords.forEach(r => {
+                if (r.SG_PARTIDO) {
+                    partyCountMap[r.SG_PARTIDO] = (partyCountMap[r.SG_PARTIDO] || 0) + 1;
+                }
+            });
+
+            const sortedParties = Object.entries(partyCountMap)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 5);
+
+            const quickPartiesContainer = document.getElementById('quickStatsTopParties');
+            quickPartiesContainer.innerHTML = '';
+            
+            if (sortedParties.length === 0) {
+                quickPartiesContainer.innerHTML = '<p class="text-gray-500 italic">Nenhum partido localizado.</p>';
+                return;
+            }
+
+            const totalRecordsCount = filteredRecords.length || 1;
+            const recordLabel = isPartyFile ? 'registros' : 'cands';
+            sortedParties.forEach(([party, count]) => {
+                const pct = ((count / totalRecordsCount) * 100).toFixed(1);
+                
+                const item = document.createElement('div');
+                item.className = 'space-y-1';
+                item.innerHTML = `
+                    <div class="flex justify-between text-[11px]">
+                        <span class="font-bold text-gray-200">${party}</span>
+                        <span class="text-gray-400">${count.toLocaleString('pt-BR')} ${recordLabel} (${pct}%)</span>
+                    </div>
+                    <div class="w-full bg-white/5 h-1 rounded-full">
+                        <div class="bg-gradient-to-r from-teal-400 to-emerald-500 h-full" style="width: ${pct}%"></div>
+                    </div>
+                `;
+                quickPartiesContainer.appendChild(item);
+            });
+        }
+
+        // CHART GENERATION
+        function renderCharts() {
+            // Data for cargo chart
+            const cargoVotes = { 'Prefeito': 0, 'Vereador': 0 };
+            filteredRecords.forEach(r => {
+                if (cargoVotes[r.DS_CARGO] !== undefined) {
+                    cargoVotes[r.DS_CARGO] += r.QT_VOTOS_NOMINAIS;
+                }
+            });
+
+            // Destroy existing instances
+            if (cargoChartInstance) cargoChartInstance.destroy();
+            if (partyChartInstance) partyChartInstance.destroy();
+
+            // Doughnut Chart (Cargos)
+            const ctxCargo = document.getElementById('cargoVotesChart').getContext('2d');
+            cargoChartInstance = new Chart(ctxCargo, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Prefeito', 'Vereador'],
+                    datasets: [{
+                        data: [cargoVotes['Prefeito'], cargoVotes['Vereador']],
+                        backgroundColor: [
+                            'rgba(59, 130, 246, 0.75)',  // Vivid Indigo/Blue
+                            'rgba(16, 185, 129, 0.75)'  // Vivid Green/Emerald
+                        ],
+                        borderColor: [
+                            'rgba(59, 130, 246, 0.9)',
+                            'rgba(16, 185, 129, 0.9)'
+                        ],
+                        borderWidth: 1.5,
+                        hoverOffset: 12
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: '#9ca3af',
+                                font: { family: 'Inter', size: 11 }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Data for Top 10 Parties chart
+            const partyVotes = {};
+            filteredRecords.forEach(r => {
+                partyVotes[r.SG_PARTIDO] = (partyVotes[r.SG_PARTIDO] || 0) + r.QT_VOTOS_NOMINAIS;
+            });
+
+            const topParties = Object.entries(partyVotes)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 10);
+
+            // Bar Chart (Top Parties)
+            const ctxParty = document.getElementById('partyVotesChart').getContext('2d');
+            partyChartInstance = new Chart(ctxParty, {
+                type: 'bar',
+                data: {
+                    labels: topParties.map(p => p[0]),
+                    datasets: [{
+                        label: 'Votos Válidos',
+                        data: topParties.map(p => p[1]),
+                        backgroundColor: 'rgba(20, 184, 166, 0.55)', // Cyan/teal
+                        borderColor: 'rgba(20, 184, 166, 0.9)',
+                        borderWidth: 1.5,
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: '#9ca3af', font: { family: 'Inter', size: 10 } }
+                        },
+                        y: {
+                            grid: { color: 'rgba(255,255,255,0.04)' },
+                            ticks: { 
+                                color: '#9ca3af', 
+                                font: { family: 'Inter', size: 9 },
+                                callback: function(val) {
+                                    return val >= 1000000 ? (val/1000000).toFixed(1) + 'M' : val.toLocaleString('pt-BR');
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+        }
+
+        // CANDIDATES TABLE COMPONENT
+        function getFilteredTableRecords() {
+            let records = [...filteredRecords];
+
+            // Apply search filter
+            if (activeTableSearch) {
+                const searchLower = activeTableSearch.toLowerCase();
+                records = records.filter(r => 
+                    r.NM_CANDIDATO.toLowerCase().includes(searchLower) ||
+                    r.NM_URNA_CANDIDATO.toLowerCase().includes(searchLower) ||
+                    r.NR_CANDIDATO.includes(searchLower)
+                );
+            }
+
+            // Apply cargo filter
+            if (activeTableCargo !== 'ALL') {
+                records = records.filter(r => r.DS_CARGO === activeTableCargo);
+            }
+
+            // Apply situation filter
+            if (activeTableSituation !== 'ALL') {
+                if (activeTableSituation === 'ELEITO') {
+                    records = records.filter(r => r.DS_SIT_TOT_TURNO.includes('ELEITO'));
+                } else if (activeTableSituation === 'SUPLENTE') {
+                    records = records.filter(r => r.DS_SIT_TOT_TURNO.includes('SUPLENTE'));
+                } else if (activeTableSituation === 'NÃO ELEITO') {
+                    records = records.filter(r => !r.DS_SIT_TOT_TURNO.includes('ELEITO') && !r.DS_SIT_TOT_TURNO.includes('SUPLENTE'));
+                }
+            }
+
+            // Apply Sort
+            records.sort((a, b) => {
+                let valA = a[activeSortColumn];
+                let valB = b[activeSortColumn];
+
+                if (typeof valA === 'string') {
+                    return sortAscending ? valA.localeCompare(valB) : valB.localeCompare(valA);
+                } else {
+                    // Numerical sorting
+                    return sortAscending ? valA - valB : valB - valA;
+                }
+            });
+
+            return records;
+        }
+
+        function renderCandidateTable() {
+            const records = getFilteredTableRecords();
+            const tableBody = document.getElementById('candidateTableBody');
+            
+            // Calculate Pagination indices
+            const totalRecords = records.length;
+            const totalPages = Math.ceil(totalRecords / recordsPerPage) || 1;
+            if (currentPage > totalPages) currentPage = totalPages;
+
+            const startIndex = (currentPage - 1) * recordsPerPage;
+            const endIndex = Math.min(startIndex + recordsPerPage, totalRecords);
+
+            // Populate table body
+            tableBody.innerHTML = '';
+            
+            if (totalRecords === 0) {
+                tableBody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-gray-500 italic">Nenhum candidato encontrado com os filtros atuais.</td></tr>`;
+                document.getElementById('tablePaginationInfo').innerText = `Mostrando 0 de 0 candidatos`;
+                document.getElementById('btnPrevPage').disabled = true;
+                document.getElementById('btnNextPage').disabled = true;
+                return;
+            }
+
+            const pageRecords = records.slice(startIndex, endIndex);
+
+            pageRecords.forEach(r => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-white/[0.02] transition-colors';
+                
+                // Colorize badge by situation
+                let badgeClass = 'bg-gray-500/10 text-gray-400 border border-gray-500/20';
+                if (r.DS_SIT_TOT_TURNO.includes('ELEITO')) {
+                    badgeClass = 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/25 font-bold';
+                } else if (r.DS_SIT_TOT_TURNO.includes('SUPLENTE')) {
+                    badgeClass = 'bg-blue-500/10 text-blue-400 border border-blue-500/20';
+                }
+
+                let subtext = '';
+                if (isPartyFile) {
+                    subtext = `<div class="text-[10px] text-gray-500">Legenda partidária</div>`;
+                } else {
+                    subtext = `<div class="text-[10px] text-gray-500">Urna: <span class="text-teal-400 font-bold">${r.NM_URNA_CANDIDATO}</span> (${r.NR_CANDIDATO})</div>`;
+                }
+
+                tr.innerHTML = `
+                    <td class="px-5 py-3.5 font-medium text-white">
+                        <div>${r.NM_CANDIDATO}</div>
+                        ${subtext}
+                    </td>
+                    <td class="px-5 py-3.5 text-gray-400">${r.NM_MUNICIPIO}</td>
+                    <td class="px-5 py-3.5"><span class="font-semibold text-gray-300">${r.SG_PARTIDO}</span></td>
+                    <td class="px-5 py-3.5">${r.DS_CARGO}</td>
+                    <td class="px-5 py-3.5 text-right font-black text-white">${r.QT_VOTOS_NOMINAIS.toLocaleString('pt-BR')}</td>
+                    <td class="px-5 py-3.5 text-center">
+                        <span class="inline-block px-2.5 py-1 rounded-full text-[10px] uppercase tracking-wider ${badgeClass}">
+                            ${r.DS_SIT_TOT_TURNO}
+                        </span>
+                    </td>
+                `;
+                tableBody.appendChild(tr);
+            });
+
+            // Update Pagination UI
+            document.getElementById('tablePaginationInfo').innerText = `Mostrando ${startIndex + 1}-${endIndex} de ${totalRecords} candidatos`;
+            document.getElementById('tableCurrentPage').innerText = currentPage;
+            document.getElementById('btnPrevPage').disabled = currentPage === 1;
+            document.getElementById('btnNextPage').disabled = currentPage === totalPages;
+
+            // Render arrow signs for sort headers
+            const columns = ['NM_CANDIDATO', 'NM_MUNICIPIO', 'SG_PARTIDO', 'DS_CARGO', 'QT_VOTOS_NOMINAIS', 'DS_SIT_TOT_TURNO'];
+            columns.forEach(col => {
+                const span = document.getElementById(`sort_${col}`);
+                if (col === activeSortColumn) {
+                    span.innerHTML = sortAscending ? '▲' : '▼';
+                    span.className = 'ml-1 text-emerald-400 font-bold';
+                } else {
+                    span.innerHTML = '';
+                }
+            });
+        }
+
+        function sortTable(column) {
+            if (activeSortColumn === column) {
+                sortAscending = !sortAscending;
+            } else {
+                activeSortColumn = column;
+                sortAscending = false; // Default desc for numbers, asc would be better for words but we keep desc initially
+            }
+            renderCandidateTable();
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                renderCandidateTable();
+            }
+        }
+
+        function nextPage() {
+            const records = getFilteredTableRecords();
+            const totalPages = Math.ceil(records.length / recordsPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderCandidateTable();
+            }
+        }
+
+        function handleTableSearch() {
+            activeTableSearch = document.getElementById('tableSearch').value;
+            currentPage = 1;
+            renderCandidateTable();
+        }
+
+        function handleTableFilters() {
+            activeTableCargo = document.getElementById('tableCargoFilter').value;
+            activeTableSituation = document.getElementById('tableSituationFilter').value;
+            currentPage = 1;
+            renderCandidateTable();
+        }
+
+        // Q&A LOCAL NLP QUERY ENGINE
+        function handleChatKeyPress(e) {
+            if (e.key === 'Enter') {
+                submitChat();
+            }
+        }
+
+        function askPreset(question) {
+            document.getElementById('chatInput').value = question;
+            submitChat();
+        }
+
+        function clearChat() {
+            const area = document.getElementById('chatMessageArea');
+            area.innerHTML = `
+                <div class="chat-assistant p-4 text-gray-300 max-w-[85%] space-y-3">
+                    <p>👋 Histórico limpo!</p>
+                    <p>Faça uma nova pergunta para analisarmos as estatísticas do arquivo CSV.</p>
+                </div>
+            `;
+        }
+
+        function addUserMessage(text) {
+            const area = document.getElementById('chatMessageArea');
+            const bubble = document.createElement('div');
+            bubble.className = 'chat-user p-4 text-gray-200 max-w-[85%] ml-auto';
+            bubble.innerHTML = text.replace(/\n/g, '<br>');
+            area.appendChild(bubble);
+            
+            // Auto scroll to bottom
+            area.scrollTop = area.scrollHeight;
+        }
+
+        function addAssistantMessage(text) {
+            const area = document.getElementById('chatMessageArea');
+            const bubble = document.createElement('div');
+            bubble.className = 'chat-assistant p-4 text-gray-200 max-w-[85%] space-y-2';
+            
+            // Basic markdown highlighting conversion
+            let parsedText = text
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                .replace(/`(.*?)`/g, '<code class="bg-white/5 border border-white/10 px-1 py-0.5 rounded text-teal-300">$1</code>')
+                .replace(/\n/g, '<br>');
+
+            bubble.innerHTML = parsedText;
+            area.appendChild(bubble);
+            
+            area.scrollTop = area.scrollHeight;
+        }
+
+        function submitChat() {
+            const input = document.getElementById('chatInput');
+            const text = input.value.trim();
+            if (!text) return;
+
+            // Add user message to UI
+            addUserMessage(text);
+            input.value = '';
+
+            // Process query
+            setTimeout(() => {
+                const answer = queryData(text);
+                addAssistantMessage(answer);
+            }, 150);
+        }
+
+        // SEMANTIC PARSING LOGIC IN PORTUGUESE
+        function queryData(query) {
+            if (electionRecords.length === 0) {
+                return "⚠️ Por favor, carregue um arquivo CSV primeiro para que eu possa responder às suas perguntas!";
+            }
+
+            const cleanQuery = query.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Remove accents
+            
+            // Check context of active municipality or search for cities in the query
+            let queryCity = null;
+            for (let mun of uniqueMunicipalities) {
+                const cleanMun = mun.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                if (cleanQuery.includes(cleanMun)) {
+                    queryCity = mun;
+                    break;
+                }
+            }
+
+            // Fallback to currently selected dashboard municipality if user mentioned "aqui", "nesta cidade" or didn't specify a city but dashboard is filtered
+            const activeCityContext = activeMunicipality !== 'ALL' ? activeMunicipality : null;
+            const targetCity = queryCity || activeCityContext;
+            const localScopeRecords = targetCity ? electionRecords.filter(r => r.NM_MUNICIPIO === targetCity) : electionRecords;
+            const scopeLabel = targetCity ? `em **${targetCity}**` : `geral (todos os municípios)`;
+
+            if (isPartyFile) {
+                // 1. QUERY: Most voted party/legenda for mayor or councillor
+                if (cleanQuery.includes('mais votado') || cleanQuery.includes('vencedor') || cleanQuery.includes('ganhou') || cleanQuery.includes('venceu') || cleanQuery.includes('maior')) {
+                    let cargo = null;
+                    let cargoName = 'partido';
+                    
+                    if (cleanQuery.includes('prefeito')) {
+                        cargo = 'Prefeito';
+                        cargoName = 'partido para prefeito';
+                    } else if (cleanQuery.includes('vereador')) {
+                        cargo = 'Vereador';
+                        cargoName = 'partido para vereador';
+                    }
+
+                    let candidates = [...localScopeRecords];
+                    if (cargo) {
+                        candidates = candidates.filter(r => r.DS_CARGO === cargo);
+                    }
+
+                    if (candidates.length === 0) {
+                        return `Não encontrei dados de votação de partidos ${scopeLabel}.`;
+                    }
+
+                    // Sum votes per party in this scope
+                    const partyVotesMap = {};
+                    candidates.forEach(r => {
+                        partyVotesMap[r.SG_PARTIDO] = (partyVotesMap[r.SG_PARTIDO] || 0) + r.QT_VOTOS_NOMINAIS;
+                    });
+
+                    const sortedParties = Object.entries(partyVotesMap)
+                        .sort((a, b) => b[1] - a[1]);
+
+                    if (sortedParties.length === 0) {
+                        return `Não há dados de votação para partidos ${scopeLabel}.`;
+                    }
+
+                    const top = sortedParties[0];
+                    let response = `🏆 O **${cargoName}** mais votado ${scopeLabel} foi o **${top[0]}**, com um total de **${top[1].toLocaleString('pt-BR')}** votos (somando nominal + legenda)!`;
+
+                    if (sortedParties.length > 1) {
+                        response += `\n\n**Top partidos mais votados:**`;
+                        const limit = Math.min(5, sortedParties.length);
+                        for (let j = 0; j < limit; j++) {
+                            const p = sortedParties[j];
+                            response += `\n${j+1}º. **${p[0]}**: **${p[1].toLocaleString('pt-BR')}** votos`;
+                        }
+                    }
+                    return response;
+                }
+
+                // 2. QUERY: Specific party check
+                // Ex: "Quantos votos teve o REPUBLICANOS?"
+                let targetParty = null;
+                for (let p of uniqueParties) {
+                    if (cleanQuery.includes(p.toLowerCase())) {
+                        targetParty = p;
+                        break;
+                    }
+                }
+
+                if (targetParty || cleanQuery.includes('partido') || cleanQuery.includes('votos de') || cleanQuery.includes('quantos votos')) {
+                    if (!targetParty) {
+                        for (let p of uniqueParties) {
+                            if (cleanQuery.includes(p.toLowerCase())) {
+                                targetParty = p;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (targetParty) {
+                        const partyRecords = localScopeRecords.filter(r => r.SG_PARTIDO === targetParty);
+                        const totalVotes = partyRecords.reduce((acc, curr) => acc + curr.QT_VOTOS_NOMINAIS, 0);
+                        const votesByCargo = {};
+                        partyRecords.forEach(r => {
+                            votesByCargo[r.DS_CARGO] = (votesByCargo[r.DS_CARGO] || 0) + r.QT_VOTOS_NOMINAIS;
+                        });
+
+                        let response = `📊 O partido **${targetParty}** obteve um total de **${totalVotes.toLocaleString('pt-BR')}** votos válidos ${scopeLabel}.`;
+                        
+                        response += `\n\n**Divisão por cargo:**`;
+                        Object.entries(votesByCargo).forEach(([cargo, votos]) => {
+                            response += `\n* **${cargo}:** ${votos.toLocaleString('pt-BR')} votos`;
+                        });
+                        
+                        return response;
+                    }
+                }
+
+                // 3. QUERY: Summary of a city
+                if (targetCity && (cleanQuery.includes('estatistica') || cleanQuery.includes('resumo') || cleanQuery.includes('sobre') || cleanQuery.includes('eleicao em'))) {
+                    const totalVotes = localScopeRecords.reduce((acc, curr) => acc + curr.QT_VOTOS_NOMINAIS, 0);
+                    
+                    const partyVotesMap = {};
+                    localScopeRecords.forEach(r => {
+                        partyVotesMap[r.SG_PARTIDO] = (partyVotesMap[r.SG_PARTIDO] || 0) + r.QT_VOTOS_NOMINAIS;
+                    });
+                    const topParty = Object.entries(partyVotesMap).sort((a,b)=>b[1]-a[1])[0];
+
+                    let resp = `🌆 **Resumo da Eleição por Partidos em ${targetCity}:**
+                    * **Total de Partidos com Votos:** ${uniqueParties.filter(p => localScopeRecords.some(r => r.SG_PARTIDO === p)).length}
+                    * **Votos Totais Computados:** **${totalVotes.toLocaleString('pt-BR')}**
+                    * **Partido Mais Votado:** ${topParty ? `**${topParty[0]}** (${topParty[1].toLocaleString('pt-BR')} votos)` : 'N/A'}`;
+
+                    return resp;
+                }
+
+                // Default party fallback
+                return `🤔 Desculpe, não consegui entender perfeitamente a sua pergunta sobre a votação dos partidos.
+                
+                **Como este arquivo contém dados agregados por partido, experimente perguntar:**
+                * *"Qual partido foi o mais votado para prefeito em ${uniqueMunicipalities[0] || 'sua cidade'}?"*
+                * *"Quantos votos teve o partido ${uniqueParties[0] || 'MDB'}?"*
+                * *"Qual partido obteve mais votos gerais?"*
+                * *"Resumo da eleição em ${uniqueMunicipalities[0] || 'sua cidade'}"*`;
+            }
+
+            // 1. QUERY: Most voted candidate / mayor / city councilor
+            if (cleanQuery.includes('mais votado') || cleanQuery.includes('vencedor') || cleanQuery.includes('ganhou') || cleanQuery.includes('venceu')) {
+                let cargo = null;
+                let cargoName = 'candidato';
+                
+                if (cleanQuery.includes('prefeito')) {
+                    cargo = 'Prefeito';
+                    cargoName = 'prefeito';
+                } else if (cleanQuery.includes('vereador')) {
+                    cargo = 'Vereador';
+                    cargoName = 'vereador';
+                }
+
+                let candidates = localScopeRecords;
+                if (cargo) {
+                    candidates = candidates.filter(r => r.DS_CARGO === cargo);
+                }
+
+                if (candidates.length === 0) {
+                    return `Não encontrei dados de ${cargoName}s ${scopeLabel}.`;
+                }
+
+                // Sort by votes
+                candidates.sort((a, b) => (b.QT_VOTOS_NOMINAIS || 0) - (a.QT_VOTOS_NOMINAIS || 0));
+                const top = candidates[0];
+
+                let response = `🏆 O **${cargoName}** mais votado ${scopeLabel} foi **${top.NM_CANDIDATO}** (conhecido(a) como \`${top.NM_URNA_CANDIDATO}\`), do **${top.SG_PARTIDO}**, com **${top.QT_VOTOS_NOMINAIS.toLocaleString('pt-BR')}** votos válidos! (Situação: \`${top.DS_SIT_TOT_TURNO}\`).`;
+
+                // Add runner ups if requested or available
+                if (candidates.length > 1) {
+                    response += `\n\n**Top 3 candidatos mais votados:**`;
+                    const limit = Math.min(3, candidates.length);
+                    for (let j = 0; j < limit; j++) {
+                        const cand = candidates[j];
+                        response += `\n${j+1}º. **${cand.NM_CANDIDATO}** (\`${cand.SG_PARTIDO}\`): **${cand.QT_VOTOS_NOMINAIS.toLocaleString('pt-BR')}** votos [${cand.DS_SIT_TOT_TURNO}]`;
+                    }
+                }
+                return response;
+            }
+
+            // 2. QUERY: Specific candidate check
+            // Ex: "Quantos votos teve o candidato Tota Duarte?"
+            if (cleanQuery.includes('candidato') || cleanQuery.includes('votos teve') || cleanQuery.includes('votos de') || cleanQuery.includes('quantos votos')) {
+                // Try matching names
+                const words = cleanQuery.split(' ');
+                let matches = [];
+
+                // Filter words that are filler
+                const filler = ['quantos', 'votos', 'teve', 'o', 'a', 'candidato', 'candidata', 'de', 'para', 'em', 'do', 'da'];
+                const searchKeywords = words.filter(w => w.length > 2 && !filler.includes(w));
+
+                if (searchKeywords.length > 0) {
+                    matches = electionRecords.filter(r => {
+                        const nameClean = r.NM_CANDIDATO.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                        const urnaClean = r.NM_URNA_CANDIDATO.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                        return searchKeywords.every(keyword => nameClean.includes(keyword) || urnaClean.includes(keyword) || r.NR_CANDIDATO.includes(keyword));
+                    });
+                }
+
+                if (matches.length > 0) {
+                    let response = `🔍 Encontrei **${matches.length}** correspondência(s):`;
+                    matches.slice(0, 5).forEach((cand, idx) => {
+                        response += `\n\n${idx+1}. **${cand.NM_CANDIDATO}** (Urna: \`${cand.NM_URNA_CANDIDATO}\` - Nº \`${cand.NR_CANDIDATO}\`):
+                        * **Cargo:** ${cand.DS_CARGO}
+                        * **Partido:** ${cand.SG_PARTIDO}
+                        * **Município:** ${cand.NM_MUNICIPIO}
+                        * **Votos Recebidos:** **${cand.QT_VOTOS_NOMINAIS.toLocaleString('pt-BR')}**
+                        * **Situação:** \`${cand.DS_SIT_TOT_TURNO}\``;
+                    });
+                    
+                    if (matches.length > 5) {
+                        response += `\n\n*e outros ${matches.length - 5} candidatos. Refine sua pergunta se necessário.*`;
+                    }
+                    return response;
+                }
+            }
+
+            // 3. QUERY: Number of elected representatives per party / elected count
+            // Ex: "Quantos vereadores o republicanos elegeu?"
+            if (cleanQuery.includes('elegeu') || cleanQuery.includes('quantos eleitos') || cleanQuery.includes('quantos candidatos eleitos')) {
+                // Find party in query
+                let targetParty = null;
+                for (let p of uniqueParties) {
+                    if (cleanQuery.includes(p.toLowerCase())) {
+                        targetParty = p;
+                        break;
+                    }
+                }
+
+                let cargo = null;
+                let cargoLabel = 'candidatos';
+                if (cleanQuery.includes('prefeito')) {
+                    cargo = 'Prefeito';
+                    cargoLabel = 'prefeitos';
+                } else if (cleanQuery.includes('vereador')) {
+                    cargo = 'Vereador';
+                    cargoLabel = 'vereadores';
+                }
+
+                let pool = localScopeRecords.filter(r => r.DS_SIT_TOT_TURNO.includes('ELEITO'));
+                
+                if (targetParty) {
+                    pool = pool.filter(r => r.SG_PARTIDO === targetParty);
+                }
+                if (cargo) {
+                    pool = pool.filter(r => r.DS_CARGO === cargo);
+                }
+
+                const partyText = targetParty ? `do partido **${targetParty}**` : 'de todos os partidos';
+                return `📈 O total de **${cargoLabel}** eleitos ${partyText} ${scopeLabel} foi **${pool.length}** candidatos.
+                ${pool.length > 0 ? `\n\n**Lista de Eleitos:**\n` + pool.slice(0, 10).map((c, i) => `${i+1}. **${c.NM_URNA_CANDIDATO}** (${c.SG_PARTIDO}) em ${c.NM_MUNICIPIO} - ${c.QT_VOTOS_NOMINAIS.toLocaleString('pt-BR')} votos`).join('\n') + (pool.length > 10 ? `\n*(e outros ${pool.length - 10} candidatos)*` : '') : ''}`;
+            }
+
+            // 4. QUERY: Summary of a city / statistics of a city
+            // Ex: "Estatísticas de Xapuri"
+            if (targetCity && (cleanQuery.includes('estatistica') || cleanQuery.includes('resumo') || cleanQuery.includes('sobre') || cleanQuery.includes('eleicao em'))) {
+                const totalCands = localScopeRecords.length;
+                const totalVotes = localScopeRecords.reduce((acc, curr) => acc + curr.QT_VOTOS_NOMINAIS, 0);
+                const mayor = localScopeRecords.filter(r => r.DS_CARGO === 'Prefeito' && r.DS_SIT_TOT_TURNO.includes('ELEITO'))[0];
+                
+                // Top party in city
+                const partiesCount = {};
+                localScopeRecords.forEach(r => {
+                    partiesCount[r.SG_PARTIDO] = (partiesCount[r.SG_PARTIDO] || 0) + r.QT_VOTOS_NOMINAIS;
+                });
+                const topParty = Object.entries(partiesCount).sort((a,b)=>b[1]-a[1])[0];
+
+                let resp = `🌆 **Resumo da Eleição em ${targetCity}:**
+                * **Total de Candidatos:** ${totalCands}
+                * **Votos Nominais Válidos:** **${totalVotes.toLocaleString('pt-BR')}**
+                * **Prefeito Eleito:** ${mayor ? `**${mayor.NM_CANDIDATO}** (${mayor.SG_PARTIDO}) com *${mayor.QT_VOTOS_NOMINAIS.toLocaleString('pt-BR')}* votos` : 'Não localizado/Segundo turno'}
+                * **Partido Mais Votado:** ${topParty ? `**${topParty[0]}** (${topParty[1].toLocaleString('pt-BR')} votos)` : 'N/A'}`;
+
+                return resp;
+            }
+
+            // Default fallback
+            return `🤔 Desculpe, não consegui entender perfeitamente a sua pergunta sobre os dados do TSE.
+
+            **Você pode tentar perguntar assim:**
+            * *"Quem foi o prefeito mais votado em ${uniqueMunicipalities[0] || 'sua cidade'}?"*
+            * *"Quem foi o vereador mais votado?"*
+            * *"Quantos vereadores o ${uniqueParties[0] || 'REPUBLICANOS'} elegeu?"*
+            * *"Quantos votos teve o candidato [Nome do candidato]?"*
+            * *"Resumo da eleição em ${uniqueMunicipalities[0] || 'sua cidade'}"*`;
+        }
+    </script>
+    <!-- Collapsible Dev Console for Diagnostics -->
+    <div id="devConsole" class="fixed bottom-4 right-4 z-[999] w-80 md:w-96 glass-card rounded-2xl overflow-hidden border border-red-500/20 shadow-2xl flex flex-col transition-all duration-300 max-h-[40px] hover:max-h-[300px]">
+        <div class="bg-gray-950/80 px-4 py-2 flex items-center justify-between cursor-pointer border-b border-white/5" onclick="toggleConsole()">
+            <span class="text-[10px] font-bold tracking-wider uppercase flex items-center gap-1.5 text-red-400">
+                <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse"></span>
+                Console de Diagnóstico (Clique para expandir)
+            </span>
+            <i data-lucide="chevron-up" id="consoleChevron" class="w-4 h-4 text-gray-400 transition-transform"></i>
+        </div>
+        <div id="consoleLogArea" class="flex-1 p-3 bg-black/80 font-mono text-[10px] text-gray-300 overflow-y-auto space-y-1.5 h-[260px] leading-normal selection:bg-red-500/20">
+            <div class="text-gray-500">// Console ativo. Qualquer erro aparecerá aqui em tempo real.</div>
+        </div>
+    </div>
+</body>
+</html>
